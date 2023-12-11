@@ -15,7 +15,7 @@
       args:
         creates: /etc/ssl/csr/private.key
     - name: Generar CSR
-      command: openssl req -new -key /etc/ssl/csr/private.key -out /etc/ssl/csr/csr.pem
+      command: openssl req -new -key /etc/ssl/csr/private.key -out /etc/ssl/csr/csr.pem -subj "/C=BO/ST=Denial/L=LAPAZ/O=Dis/CN=x0axon01.local"
     #  args:
     #    creates: /etc/ssl/csr/csr.pem
 
