@@ -3,27 +3,27 @@
  hosts: Linux
  become: yes
 
-  tasks:
-    - name: Generar directorio para CSR
-      file:
-        path: /etc/ssl/csr
-        state: directory
-        mode: 0755
+ tasks:
+   - name: Generar directorio para CSR
+     file:
+       path: /etc/ssl/csr
+       state: directory
+       mode: 0755
 
-    - name: Generar clave privada para CSR
-      command: openssl genpkey -algorithm RSA -out /etc/ssl/csr/private.key
-      args:
-        creates: /etc/ssl/csr/private.key
+   - name: Generar clave privada para CSR
+     command: openssl genpkey -algorithm RSA -out /etc/ssl/csr/private.key
+     args:
+       creates: /etc/ssl/csr/private.key
 
-    - name: Generar CSR
-      command: openssl req -new -key /etc/ssl/csr/private.key -out /etc/ssl/csr/csr.pem
-      args:
-        creates: /etc/ssl/csr/csr.pem
+   - name: Generar CSR
+     command: openssl req -new -key /etc/ssl/csr/private.key -out /etc/ssl/csr/csr.pem
+     args:
+       creates: /etc/ssl/csr/csr.pem
 
-    - name: Mostrar CSR
-      command: cat /etc/ssl/csr/csr.pem
-      register: csr_output
+   - name: Mostrar CSR
+     command: cat /etc/ssl/csr/csr.pem
+     register: csr_output
 
-    - name: Imprimir CSR generado
-      debug:
-        var: csr_output.stdout_lines
+   - name: Imprimir CSR generado
+     debug:
+       var: csr_output.stdout_lines
