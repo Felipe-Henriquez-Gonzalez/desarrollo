@@ -14,11 +14,10 @@
       command: openssl genpkey -algorithm RSA -out /etc/ssl/csr/private.key
       args:
         creates: /etc/ssl/csr/private.key
-
     - name: Generar CSR
       command: openssl req -new -key /etc/ssl/csr/private.key -out /etc/ssl/csr/csr.pem
-      args:
-        creates: /etc/ssl/csr/csr.pem
+    #  args:
+    #    creates: /etc/ssl/csr/csr.pem
 
     - name: Mostrar CSR
       command: cat /etc/ssl/csr/csr.pem
