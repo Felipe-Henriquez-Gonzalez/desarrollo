@@ -1,8 +1,29 @@
 ---
 -name: create CSR
+ hosts: Linux
+ become: yes
 
-- name: Generate an OpenSSL Certificate Signing Request
-  community.crypto.openssl_csr:
-    path: /etc/ssl/csr/www.ansible.com.csr
-    privatekey_path: /etc/ssl/private/ansible.com.pem
-    common_name: www.ansible.com
+  tasks:
+    - name: Generar directorio para CSR
+      file:
+        path: /etc/ssl/csr
+        state: directory
+        mode: 0755
+
+    - name: Generar clave privada para CSR
+      command: openssl genpkey -algorithm RSA -out /etc/ssl/csr/private.key
+      args:
+        creates: /etc/ssl/csr/private.key
+
+    - name: Generar CSR
+      command: openssl req -new -key /etc/ssl/csr/private.key -out /etc/ssl/csr/csr.pem
+      args:
+        creates: /etc/ssl/csr/csr.pem
+
+    - name: Mostrar CSR
+      command: cat /etc/ssl/csr/csr.pem
+      register: csr_output
+
+    - name: Imprimir CSR generado
+      debug:
+        var: csr_output.stdout_lines
