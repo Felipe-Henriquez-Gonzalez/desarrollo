@@ -1,0 +1,19 @@
+---
+- name: monitoreo Solarwinds
+  hosts: all
+  sources:
+    - name: alertmanager
+      ansible.eda.alertmanager:
+        host: 0.0.0.0
+        port: 5050
+        data_alerts_path:
+        data_host_path: ImpactedEntityNames
+        skip_original_data: true
+   rules:
+    - name: Service http is not running on  web server 
+      condition:    event.payload.message == "iniciar"
+      action:
+        run_job_template:
+          name: "iniciar-apache"
+          organization: "Default"
+...
