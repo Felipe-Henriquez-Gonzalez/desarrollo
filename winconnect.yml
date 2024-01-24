@@ -10,7 +10,7 @@
       changed_when: false
     - name: show winrmstatus
       debug:
-        msg: "{{ result.content | from_json }}"
+        msg: "{{ result }}"
         
     - name: Generate Self-Signed Certificate
       win_shell: |
