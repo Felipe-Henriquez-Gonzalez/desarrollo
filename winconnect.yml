@@ -1,6 +1,6 @@
 ---
 - name: validate windows server
-  hosts: windows_servers
+  hosts: windows
   gather_facts: false
   become: true
 
