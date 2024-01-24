@@ -1,0 +1,11 @@
+---
+- name: validate windows server
+  hosts: windows_servers
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Ensure WinRM is enabled
+      ansible.windows.win_shell: echo true
+      register: result
+      changed_when: false
