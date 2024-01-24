@@ -8,3 +8,19 @@
       win_shell: echo true
       register: result
       changed_when: false
+    - name: show winrmstatus
+      debug:
+        msg: "{{ result.content | from_json }}"
+        
+    - name: Generate Self-Signed Certificate
+      win_shell: |
+        $cert = New-SelfSignedCertificate -DnsName "x0axon01" -CertStoreLocation "Cert:\LocalMachine\My"
+        $certThumbprint = $cert.Thumbprint
+        $certThumbprint
+      register: cert_result
+
+    - name: Submit Certificate Request
+      win_shell: |
+        $certThumbprint = "{{ cert_result.stdout }}"
+        Submit-CertificateRequest -Thumbprint $certThumbprint -CertStoreLocation "Cert:\LocalMachine\My"
+      when: cert_result.stdout is defined
