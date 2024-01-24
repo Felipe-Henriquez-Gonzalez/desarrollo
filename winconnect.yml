@@ -2,7 +2,6 @@
 - name: validate windows server
   hosts: windows
   gather_facts: false
-  become: true
 
   tasks:
     - name: Ensure WinRM is enabled
