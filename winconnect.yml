@@ -10,7 +10,7 @@
   #    changed_when: false
     - name: show csr
       debug:
-        msg: "{{ result }}"
+        msg: "{{ csr_data }}"
         
   #  - name: Generate Self-Signed Certificate
   #    win_shell: |
