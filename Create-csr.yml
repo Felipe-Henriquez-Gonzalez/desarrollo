@@ -26,3 +26,7 @@
     - name: Imprimir CSR generado
       debug:
         var: csr_output.stdout_lines
+    - name: set stat para el certificado
+      ansible.builtin.set_stats:
+        data: 
+          csr_data: "{{ csr_output.stdout_lines  }}"
