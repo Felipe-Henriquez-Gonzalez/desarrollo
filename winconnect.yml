@@ -4,23 +4,25 @@
   gather_facts: false
 
   tasks:
-    - name: Ensure WinRM is enabled
-      win_shell: echo true
-      register: result
-      changed_when: false
-    - name: show winrmstatus
+  #  - name: Ensure WinRM is enabled
+  #    win_shell: echo true
+  #    register: result
+  #    changed_when: false
+    - name: show csr
       debug:
         msg: "{{ result }}"
         
-    - name: Generate Self-Signed Certificate
-      win_shell: |
-        $cert = New-SelfSignedCertificate -DnsName "x0axon01" -CertStoreLocation "Cert:\LocalMachine\My"
-        $certThumbprint = $cert.Thumbprint
-        $certThumbprint
-      register: cert_result
+  #  - name: Generate Self-Signed Certificate
+  #    win_shell: |
+  #      $cert = New-SelfSignedCertificate -DnsName "x0axon01" -CertStoreLocation "Cert:\LocalMachine\My"
+  #      $certThumbprint = $cert.Thumbprint
+  #      $certThumbprint
+  #    register: cert_result
 
-    - name: Submit Certificate Request
-      win_shell: |
-        $certThumbprint = "{{ cert_result.stdout }}"
-        Submit-CertificateRequest -Thumbprint $certThumbprint -CertStoreLocation "Cert:\LocalMachine\My"
-      when: cert_result.stdout is defined
+#
+ 
+  #  - name: Submit Certificate Request
+  #    win_shell: |
+  #      $certThumbprint = "{{ cert_result.stdout }}"
+  #      Submit-CertificateRequest -Thumbprint $certThumbprint -CertStoreLocation "Cert:\LocalMachine\My"
+  #    when: cert_result.stdout is defined
