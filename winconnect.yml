@@ -17,10 +17,25 @@
         content: "{{ csr_data }}"
         dest: c:\candidate.csr
 
-    - name: List out the certification authorities in the AD
-      ansible.windows.win_shell: certutil -config - -ping
+    - name: List out cert authorities
+      ansible.windows.win_command:
+        cmd: certutil -ping z0cert03.grupobisa.net
+      failed_when: false
 
-        
+    - name: Sign the Certificate
+      ansible.windows.win_command:
+        # You have to pass the certification Authority too
+        # Test with Z0CERT01-ROOT-CA
+        # Test with grupobisa-Z0CERT02-CA
+        # Machines are z0cert04.grupobisa.net
+        # Machines are z0cert03.grupobisa.net
+        cmd: >-
+          certreq.exe -q Submit -Config grupobisa-Z0CERT02-CA c:\candidate.csr c:\outfile.cer
+
+    - name: Show the signed cert
+      ansible.windows.win_command:
+        cmd: type c:\outfile.cer
+
   #  - name: Generate Self-Signed Certificate
   #    win_shell: |
   #      $cert = New-SelfSignedCertificate -DnsName "x0axon01" -CertStoreLocation "Cert:\LocalMachine\My"
@@ -29,7 +44,6 @@
   #    register: cert_result
 
 #
- 
   #  - name: Submit Certificate Request
   #    win_shell: |
   #      $certThumbprint = "{{ cert_result.stdout }}"
