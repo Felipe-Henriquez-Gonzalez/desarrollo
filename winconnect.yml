@@ -45,8 +45,8 @@
           c:\candidate.csr c:\outfile.cer
 
     - name: Show the signed cert
-      ansible.windows.win_command:
-        cmd: dir c:\
+      ansible.windows.win_shell: dir c:\
+
 
   #  - name: Generate Self-Signed Certificate
   #    win_shell: |
