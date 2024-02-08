@@ -4,10 +4,6 @@
   gather_facts: false
 
   tasks:
-  #  - name: Ensure WinRM is enabled
-  #    win_shell: echo true
-  #    register: result
-  #    changed_when: false
     - name: Show csr
       ansible.builtin.debug:
         msg: "{{ csr_data }}"
@@ -33,9 +29,9 @@
     - name: Sign the Certificate
       ansible.windows.win_command:
         cmd: >-
-          certreq.exe -q 
-          -attrib "CertificateTemplate:webserver"  
-          -Submit 
+          certreq.exe -q
+          -attrib "CertificateTemplate:webserver"
+          -Submit
           c:\candidate.csr c:\outfile.cer
 
     - name: Get the signed cert
@@ -44,7 +40,7 @@
 
     - name: Print the signed cert
       ansible.builtin.debug:
-        var: contenido_cer.stdout  
+        var: contenido_cer.stdout
 
     - name: List the directory
       ansible.windows.win_shell: dir c:\
