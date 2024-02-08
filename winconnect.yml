@@ -29,8 +29,9 @@
         # Test with grupobisa-Z0CERT02-CA
         # Machines are z0cert04.grupobisa.net
         # Machines are z0cert03.grupobisa.net
+          # certreq.exe -q -Submit -Config grupobisa-Z0CERT02-CA c:\candidate.csr c:\outfile.cer
         cmd: >-
-          certreq.exe -q -Submit -Config grupobisa-Z0CERT02-CA c:\candidate.csr c:\outfile.cer
+          certreq.exe -q -Submit c:\candidate.csr c:\outfile.cer
 
     - name: Show the signed cert
       ansible.windows.win_command:
