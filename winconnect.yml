@@ -32,19 +32,21 @@
 
     - name: Sign the Certificate
       ansible.windows.win_command:
-        # You have to pass the certification Authority too
-        # Test with Z0CERT01-ROOT-CA
-        # Test with grupobisa-Z0CERT02-CA
-        # Machines are z0cert04.grupobisa.net
-        # Machines are z0cert03.grupobisa.net
-          # certreq.exe -q -Submit -Config grupobisa-Z0CERT02-CA c:\candidate.csr c:\outfile.cer
         cmd: >-
           certreq.exe -q 
           -attrib "CertificateTemplate:webserver"  
           -Submit 
           c:\candidate.csr c:\outfile.cer
 
-    - name: Show the signed cert
+    - name: Get the signed cert
+      ansible.windows.win_shell: type c:\outfile.cer
+      register: contenido_cer
+
+    - name: Print the signed cert
+      ansiblw.builtin.debug:
+        var: contenido_cer.stdout  
+
+    - name: List the directory
       ansible.windows.win_shell: dir c:\
 
 
