@@ -19,7 +19,7 @@
 
     - name: List out cert authorities
       ansible.windows.win_command:
-        cmd: certutil -ping z0cert03.grupobisa.net
+        cmd: certutil -ping z0cert04.grupobisa.net
       failed_when: false
 
     - name: Sign the Certificate
