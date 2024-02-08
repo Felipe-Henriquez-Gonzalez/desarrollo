@@ -1,5 +1,5 @@
 ---
-- name: validate windows server
+- name: Validate windows server
   hosts: windows
   gather_facts: false
 
@@ -8,9 +8,18 @@
   #    win_shell: echo true
   #    register: result
   #    changed_when: false
-    - name: show csr
-      debug:
+    - name: Show csr
+      ansible.builtin.debug:
         msg: "{{ csr_data }}"
+
+    - name: Render out the CSR file somewhere
+      ansible.windows.win_copy:
+        content: "{{ csr_data }}"
+        dest: c:\candidate.csr
+
+    - name: List out the certification authorities in the AD
+      ansible.windows.win_shell: certutil -config - -ping
+
         
   #  - name: Generate Self-Signed Certificate
   #    win_shell: |

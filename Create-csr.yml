@@ -29,4 +29,4 @@
     - name: set stat para el certificado
       ansible.builtin.set_stats:
         data: 
-          csr_data: "{{ csr_output.stdout_lines  }}"
+          csr_data: "{{ csr_output.stdout }}"
