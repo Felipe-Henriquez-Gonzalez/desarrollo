@@ -39,14 +39,14 @@
         # Machines are z0cert03.grupobisa.net
           # certreq.exe -q -Submit -Config grupobisa-Z0CERT02-CA c:\candidate.csr c:\outfile.cer
         cmd: >-
-          certreq.exe -q 
-          -attrib "CertificateTemplate:webserver"  
-          -Submit 
-          c:\candidate.csr c:\outfile.cer
+          certreq.exe -q
+          -attrib "CertificateTemplate:webserver"
+          -Submit
+          c:\candidate.csr
 
     - name: Show the signed cert
       ansible.windows.win_command:
-        cmd: type c:\outfile.cer
+        cmd: dir c:\
 
   #  - name: Generate Self-Signed Certificate
   #    win_shell: |
