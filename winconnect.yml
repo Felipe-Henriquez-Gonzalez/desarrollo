@@ -43,7 +43,7 @@
       register: contenido_cer
 
     - name: Print the signed cert
-      ansiblw.builtin.debug:
+      ansible.builtin.debug:
         var: contenido_cer.stdout  
 
     - name: List the directory
