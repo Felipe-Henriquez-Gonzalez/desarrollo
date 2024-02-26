@@ -7,7 +7,7 @@
   tasks:
   #-  name: create a certificate backup
   - name: Create a keystore for the given certificate/private key pair (inline)
-    community.general.java_keystore:
+    java_keystore:
       name: example
     #  certificate: |
     #  private_key: |
