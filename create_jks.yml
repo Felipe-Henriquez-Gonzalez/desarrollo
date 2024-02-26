@@ -1,0 +1,19 @@
+--
+
+
+
+
+-  name: create a certificate backup
+
+
+- name: Create a keystore for the given certificate/private key pair (inline)
+  community.general.java_keystore:
+    name: example
+    certificate: |
+      
+    private_key: |
+
+    certificate_path: /etc/ssl/certs/ssl-cert-snakeoil.pem
+    private_key_path: /etc/ssl/private/ssl-cert-snakeoil.key
+    password: changeit
+    dest: /opt/server_certificates/y0detecta03.jks
