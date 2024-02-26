@@ -1,7 +1,8 @@
---
 
-
-
+---
+- name: create CSR
+  hosts: Linux
+  become: yes
 
 -  name: create a certificate backup
 
