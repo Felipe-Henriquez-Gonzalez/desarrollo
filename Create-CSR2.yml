@@ -11,7 +11,10 @@
 #        mode: 0755
     - name: crear backup de llave original
       command: cp /opt/server_certificates/y0detectta03.jks /opt/server_certificates/y0detectta03.jks.bak
-
+      
+    - name: borado 1
+      command: rm -rf  /opt/server_certificates/y0detectta05.jks 
+      
     - name: Generar keystore
       command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detectta05.jks -storepass changeit -keypass changeit -dname "CN=y0detectta04, OU=Banco , O=Banco Bisa, L=La PAZ, ST=BO,C=BO"
 #      args:
