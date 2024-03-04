@@ -45,6 +45,13 @@
     - name: List the directory
       ansible.windows.win_shell: dir c:\
 
+    - name: set stat para el certificado
+      ansible.builtin.set_stats:
+        data: 
+          cert_data: "{{ contenido_cer.stdout }}"
+
+
+
 
   #  - name: Generate Self-Signed Certificate
   #    win_shell: |
