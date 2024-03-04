@@ -10,7 +10,7 @@
 #        state: directory
 #        mode: 0755
     - name: crear backup de llave original
-      ansible.builtin.copy:
+      copy:
         src: /opt/server_certificates/y0detecta03.jks
         dest: /opt/server_certificates/y0detecta03.jks.$(date +%d-%-%y).bak
 
