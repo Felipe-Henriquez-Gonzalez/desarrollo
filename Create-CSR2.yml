@@ -17,7 +17,7 @@
 #      args:
 #        creates: /opt/server_certificates/y0detecta05.jks
     - name: Generar CSR
-      command: keytool -certreq -alias mykey -keystore /opt/server_certificates/y0detecta05.jks -file /opt/server_certificates/csr.pem-storepass changeit -keypass changeit
+      command: keytool -certreq -alias mykey -keystore /opt/server_certificates/y0detecta05.jks -file /opt/server_certificates/csr.pem -storepass changeit -keypass changeit
       
     - name: Mostrar CSR
       command: cat /opt/server_certificates/csr.pem
