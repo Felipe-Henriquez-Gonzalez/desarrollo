@@ -7,3 +7,7 @@
     - name: mostrar certificado
       ansible.builtin.debug:
         msg: "{{ cert_data }}"
+    - name: Render out the certificate file somewhere
+      copy:
+        content: "{{ cert_data }}"
+        dest: /opt/server_certificates/certificate.cer
