@@ -1,0 +1,34 @@
+---
+- name: create CSR
+  hosts: {{host_name}}
+  become: yes
+
+  tasks:
+    - name: Generar directorio para CSR
+      file:
+        path: /opt/server_certificates/
+        state: directory
+        mode: 0755
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: /opt/server_certificates/y0detecta03.jks
+        dest: /opt/server_certificates/y0detecta03.jks.$(date +%d-%-%y).bak
+
+    - name: Generar keystore
+      command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detecta05.jks
+      args:
+        creates: /opt/server_certificates/y0detecta05.jks
+    - name: Generar CSR
+      command: openssl req -new -key /opt/server_certificates/private.key -out /opt/server_certificates/csr.pem -subj "/C=BO/ST=Denial/L=LAPAZ/O=Dis/CN=$(hostname)"
+      
+    - name: Mostrar CSR
+      command: cat /opt/server_certificates/csr.pem
+      register: csr_output
+
+    - name: Imprimir CSR generado
+      debug:
+        var: csr_output.stdout_lines
+    - name: set stat para el certificado
+      ansible.builtin.set_stats:
+        data: 
+          csr_data: "{{ csr_output.stdout }}"
