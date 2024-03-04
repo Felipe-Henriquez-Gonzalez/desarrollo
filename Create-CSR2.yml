@@ -4,11 +4,11 @@
   become: yes
 
   tasks:
-    - name: Generar directorio para CSR
-      file:
-        path: /opt/server_certificates/
-        state: directory
-        mode: 0755
+#    - name: Generar directorio para CSR
+#      file:
+#        path: /opt/server_certificates/
+#        state: directory
+#        mode: 0755
     - name: crear backup de llave original
       ansible.builtin.copy:
         src: /opt/server_certificates/y0detecta03.jks
