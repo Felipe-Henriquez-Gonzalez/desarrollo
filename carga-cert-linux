@@ -1,0 +1,9 @@
+---
+- name: cargar certificado
+  hosts: "{{ host_name }}"
+  gather_facts: false
+
+  tasks:
+    - name: mostrar certificado
+      ansible.builtin.debug:
+        msg: "{{ cert_data }}"
