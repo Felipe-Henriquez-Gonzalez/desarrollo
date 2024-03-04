@@ -1,6 +1,6 @@
 ---
 - name: create CSR v2
-  hosts: {{ host_name }}
+  hosts: "{{ host_name }}"
   become: yes
 
   tasks:
