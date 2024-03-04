@@ -6,18 +6,18 @@
   tasks:
 #    - name: Generar directorio para CSR
 #      file:
-#        path: /opt/server_certificates/
+#        path: /opt/server_certificates//opt/server_certificates/csr.pem
 #        state: directory
 #        mode: 0755
     - name: crear backup de llave original
       command: cp /opt/server_certificates/y0detectta03.jks /opt/server_certificates/y0detectta03.jks.bak
 
     - name: Generar keystore
-      command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detecta05.jks -storepass changeit -subj "/C=BO/ST=Denial/L=LAPAZ/O=Dis/CN=$(hostname)"
+      command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detecta05.jks -storepass changeit -keypass changeit -dname "/C=BO/ST=Denial/L=LAPAZ/O=Dis/CN=$(hostname)"
       args:
         creates: /opt/server_certificates/y0detecta05.jks
     - name: Generar CSR
-      command: openssl req -new -key /opt/server_certificates/private.key -out /opt/server_certificates/csr.pem -subj "/C=BO/ST=Denial/L=LAPAZ/O=Dis/CN=$(hostname)"
+      command: keytool -certreq -alias mykey -keystore /opt/server_certificates/y0detecta05.jks -file /opt/server_certificates/csr.pem-storepass changeit -keypass changeit
       
     - name: Mostrar CSR
       command: cat /opt/server_certificates/csr.pem
