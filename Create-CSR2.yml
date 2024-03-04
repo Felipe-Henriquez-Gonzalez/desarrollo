@@ -13,7 +13,7 @@
       command: cp /opt/server_certificates/y0detectta03.jks /opt/server_certificates/y0detectta03.jks.bak
 
     - name: Generar keystore
-      command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detecta05.jks
+      command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detecta05.jks -storepass changeit -subj "/C=BO/ST=Denial/L=LAPAZ/O=Dis/CN=$(hostname)"
       args:
         creates: /opt/server_certificates/y0detecta05.jks
     - name: Generar CSR
