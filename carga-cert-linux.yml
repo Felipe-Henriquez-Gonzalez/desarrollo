@@ -12,4 +12,4 @@
         content: "{{ cert_data }}"
         dest: /opt/server_certificates/certificate.cer
     - name: carga certificado a la keystore
-      command: keytool -import -alias mykey -file /opt/server_certificates/certificate.cer -keystore /opt/server_certificates/y0detectta03.jks -storepass bisabisa -noprompt
+      command: keytool -import -alias detectta -file /opt/server_certificates/certificate.cer -keystore /opt/server_certificates/y0detectta03.jks -storepass bisabisa -noprompt
