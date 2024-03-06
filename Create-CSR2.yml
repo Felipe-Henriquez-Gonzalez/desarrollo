@@ -10,20 +10,20 @@
 #        state: directory
 #        mode: 0755
     - name: crear backup de llave original
-      command: mv /opt/server_certificates/y0detectta05.jks /opt/server_certificates/y0detectta05.jks.bak
+      command: mv /opt/server_certificates/y0detectta03.jks /opt/server_certificates/y0detectta03.jks.bak
       
 #    - name: borado 1
 #      command: rm -rf  /opt/server_certificates/y0detectta05.jks 
       
-    - name: Generar keystore
-      command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detectta05.jks -storepass changeit -keypass changeit -dname "CN=y0detectta04, OU=Banco , O=Banco Bisa, L=La PAZ, ST=BO,C=BO"
+#    - name: Generar keystore
+#      command: keytool -genkeypair -alias mykey -keyalg RSA -keystore /opt/server_certificates/y0detectta05.jks -storepass changeit -keypass changeit -dname "CN=y0detectta04, OU=Banco , O=Banco Bisa, L=La PAZ, ST=BO,C=BO"
 #      args:
 #        creates: /opt/server_certificates/y0detecta05.jks
     - name: Generar CSR
-      command: keytool -certreq -alias mykey -keystore /opt/server_certificates/y0detectta05.jks -file /opt/server_certificates/csr.pem -storepass changeit -keypass changeit
+      command: keytool -certreq -alias mykey -keystore /opt/server_certificates/y0detectta03.jks -file /opt/secert.csrrver_certificates/cert.csr -storepass changeit -keypass changeit
       
     - name: Mostrar CSR
-      command: cat /opt/server_certificates/csr.pem
+      command: cat /opt/server_certificates/cert.csr
       register: csr_output
 
     - name: Imprimir CSR generado
