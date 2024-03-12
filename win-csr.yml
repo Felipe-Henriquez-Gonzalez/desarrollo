@@ -4,7 +4,14 @@
   gather_facts: false
 
   tasks:
-
+    - name: Make sure the response files don't exist, will turn up an error if they're there
+      ansible.windows.win_file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - c:\a.p12
+        - c:\cert.csr
+      
     - name: create keystore
       ansible.windows.win_command:
         cmd: keytool -genkey -alias server -validity 365 -keyalg RSA -keystore c:/a.p12 -dname "CN={{win_host}}, OU=Banco , O=Banco Bisa, L=La PAZ, ST=BO,C=BO" -storepass bisabisa
@@ -17,6 +24,7 @@
    
     - name: list C disk
       ansible.windows.win_shell: dir c:\
+      
 
       
 #    - name: Mostrar CSR
