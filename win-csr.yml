@@ -14,7 +14,8 @@
       ansible.windows.win_command:
         cmd: keytool -certreq -alias server   -keystore c:/a.p12 -file c:/cert.csr -storepass bisabisa
       failed_when: false
-    - name: lidtar c: 
+   
+    - name: listar c: 
       ansible.windows.win_shell: dir c:\
 
       
