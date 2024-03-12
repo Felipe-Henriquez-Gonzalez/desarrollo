@@ -14,16 +14,19 @@
       ansible.windows.win_command:
         cmd: keytool -certreq -alias server   -keystore c:/a.p12 -file c:/cert.csr -storepass bisabisa
       failed_when: false
-      
-    - name: Mostrar CSR
-      ansible.windows.win_shell: type c:/cert.csr
-      register: csr_output
+    - name: lidtar c: 
+      ansible.windows.win_shell: dir c:\
 
-    - name: Imprimir CSR generado
-      ansible.builtin.debug:
-        var: csr_output.stdout_lines
+      
+#    - name: Mostrar CSR
+#      ansible.windows.win_shell: type c:/cert.csr
+#      register: csr_output
+
+#    - name: Imprimir CSR generado
+#      ansible.builtin.debug:
+#        var: csr_output.stdout_lines
         
-    - name: set stat para el certificado
-      ansible.builtin.set_stats:
-        data: 
-          csr_data: "{{ csr_output.stdout }}"
+#    - name: set stat para el certificado
+#      ansible.builtin.set_stats:
+#        data: 
+#          csr_data: "{{ csr_output.stdout }}"
