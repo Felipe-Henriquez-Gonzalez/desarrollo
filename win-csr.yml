@@ -24,15 +24,13 @@
    
     - name: list C disk
       ansible.windows.win_shell: dir c:\
+      register: dir
+
+    - name: mostrar dir
+      ansible.builtin.debug:
+        var: dir.stdout
       
-    - name: Make sure the response files don't exist, will turn up an error if they're there
-      ansible.windows.win_file:
-        path: "{{ item }}"
-        state: present
-      loop:
-        - c:\a.p12
-        - c:\cert.csr
-      
+
 
 #    - name: Imprimir CSR generado
 #      ansible.builtin.debug:
