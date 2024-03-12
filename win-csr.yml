@@ -16,7 +16,7 @@
       failed_when: false
       
     - name: Mostrar CSR
-      command: type c:/a.p12
+      command: type c:/cert.csr
       register: csr_output
 
     - name: Imprimir CSR generado
