@@ -15,7 +15,7 @@
 
     - name: create keystore
       ansible.windows.win_command:
-        cmd: certutil -ping z0cert04.grupobisa.net
+        cmd: keytool -genkey -alias server -validity 365 -keyalg RSA -keystore c:/a.p12 -dname "CN={{win_host}}, OU=Banco , O=Banco Bisa, L=La PAZ, ST=BO,C=BO" -storepass bisabisa
       failed_when: false
 
 #    - name: Make sure the response files don't exist, will turn up an error if they're there
