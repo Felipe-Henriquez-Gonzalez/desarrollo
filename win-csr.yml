@@ -27,9 +27,9 @@
       
 
       
-#    - name: Mostrar CSR
-#      ansible.windows.win_shell: type c:/cert.csr
-#      register: csr_output
+    - name: Mostrar CSR
+      ansible.windows.win_shell: type c:/cert.csr
+      register: csr_output
 
 #    - name: Imprimir CSR generado
 #      ansible.builtin.debug:
