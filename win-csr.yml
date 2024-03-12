@@ -1,0 +1,51 @@
+---
+- name: Crear Firma certificado Windows 
+  hosts: "{{win_host}}"
+  gather_facts: false
+
+  tasks:
+#    - name: Show csr
+#      ansible.builtin.debug:
+#        msg: "{{ csr_data }}"
+#
+#    - name: Render out the CSR file somewhere
+#      ansible.windows.win_copy:
+#        content: "{{ csr_data }}"
+#        dest: c:\candidate.csr
+
+    - name: create keystore
+      ansible.windows.win_command:
+        cmd: certutil -ping z0cert04.grupobisa.net
+      failed_when: false
+
+#    - name: Make sure the response files don't exist, will turn up an error if they're there
+#      ansible.windows.win_file:
+#        path: "{{ item }}"
+#        state: absent
+#      loop:
+#        - c:\outfile.cer
+#        - c:\outfile.rsp
+#
+#    - name: Sign the Certificate
+#      ansible.windows.win_command:
+#        cmd: >-
+#          certreq.exe -q
+#          -attrib "CertificateTemplate:webserver"
+#          -Submit
+#          c:\candidate.csr c:\outfile.cer
+#
+#    - name: Get the signed cert
+#      ansible.windows.win_shell: type c:\outfile.cer
+#      register: contenido_cer
+
+    - name: Print the signed cert
+      ansible.builtin.debug:
+        var: contenido_cer.stdout
+
+    - name: List the directory
+      ansible.windows.win_shell: dir c:\
+
+    - name: set stat para el certificado
+      ansible.builtin.set_stats:
+        data: 
+          cert_data: "{{ contenido_cer.stdout }}"
