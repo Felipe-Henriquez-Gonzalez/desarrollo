@@ -1,5 +1,5 @@
 ---
-- name: Validate windows server
+- name: Firmar certificado en windows
   hosts: windows
   gather_facts: false
 
