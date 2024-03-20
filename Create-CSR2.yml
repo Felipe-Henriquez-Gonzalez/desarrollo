@@ -9,6 +9,8 @@
 #        path: /opt/server_certificates//opt/server_certificates/csr.pem
 #        state: directory
 #        mode: 0755
+    - name: recuperar llave
+      command: cp /opt/server_certificates/y0detectta03.jks.original /opt/server_certificates/y0detectta03.jks
     - name: crear backup de llave original
       command: cp /opt/server_certificates/y0detectta03.jks /opt/server_certificates/y0detectta03.jks.bak
       
