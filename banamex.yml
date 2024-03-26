@@ -1,0 +1,9 @@
+---
+- name: playbook de prueba 
+  hosts: {{hosts_var}}
+  become: yes
+
+  tasks:
+    -name: prueba de mensaje 
+     ansible.builtin.debug:
+       msg: "esta es una prueba para Banamex"
