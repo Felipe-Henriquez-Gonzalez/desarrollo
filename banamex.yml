@@ -1,6 +1,6 @@
 ---
 - name: playbook de prueba 
-  hosts: {{hosts_var}}
+  hosts: {{ hosts_var }}
   become: yes
 
   tasks:
