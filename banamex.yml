@@ -7,3 +7,4 @@
     - name: prueba de mensaje 
       ansible.builtin.debug:
         msg: "esta es una prueba para Banamex"
+        
