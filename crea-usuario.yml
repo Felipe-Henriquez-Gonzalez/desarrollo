@@ -15,7 +15,6 @@
     - name: Add user to sudo group
       ansible.builtin.user:
         name: "nombre_usuario"
-        groups: "sudo"
         append: yes
 
     - name: Configure sudoers for no password
