@@ -2,7 +2,8 @@
 - name: Create a user with sudo privileges and no password requirement
   hosts: all
   become: yes
-  nombre_usuario: "{{username}}"
+  vars:
+    nombre_usuario: "{{username}}"
   
   tasks:
     - name: Ensure the user exists
