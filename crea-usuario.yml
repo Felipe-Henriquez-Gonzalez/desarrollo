@@ -12,11 +12,6 @@
         comment: "Usuario con sudo sin contraseña"
         shell: "/bin/bash"
 
-    - name: Add user to sudo group
-      ansible.builtin.user:
-        name: "{{nombre_usuario}}"
-        append: yes
-
     - name: Configure sudoers for no password
       ansible.builtin.copy:
         dest: "/etc/sudoers.d/nombre_usuario"
