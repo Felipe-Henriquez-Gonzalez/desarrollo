@@ -1,0 +1,31 @@
+---
+- name: Create a user with sudo privileges and no password requirement
+  hosts: all
+  become: yes
+  nombre_usuario: "{{username}}"
+  
+  tasks:
+    - name: Ensure the user exists
+      ansible.builtin.user:
+        name: "nombre_usuario"
+        comment: "Usuario con sudo sin contraseña"
+        shell: "/bin/bash"
+
+    - name: Add user to sudo group
+      ansible.builtin.user:
+        name: "nombre_usuario"
+        groups: "sudo"
+        append: yes
+
+    - name: Configure sudoers for no password
+      ansible.builtin.copy:
+        dest: "/etc/sudoers.d/nombre_usuario"
+        content: "nombre_usuario ALL=(ALL) NOPASSWD:ALL\n"
+        owner: root
+        group: root
+        mode: '0440'
+
+    - name: Validate sudoers file syntax
+      ansible.builtin.command:
+        cmd: visudo -cf /etc/sudoers
+      changed_when: false
