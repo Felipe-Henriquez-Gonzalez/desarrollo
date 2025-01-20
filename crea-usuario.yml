@@ -3,24 +3,24 @@
   hosts: all
   become: yes
   vars:
-    nombre_usuario: "{{username}}"
+    nombre_usuario: "{{ username }}"
   
   tasks:
     - name: Ensure the user exists
       ansible.builtin.user:
-        name: "{{nombre_usuario}}"
+        name: "{{ nombre_usuario }}"
         comment: "Usuario con sudo sin contraseña"
         shell: "/bin/bash"
 
     - name: Configure sudoers for no password
       ansible.builtin.copy:
-        dest: "/etc/sudoers.d/nombre_usuario"
-        content: ""{{nombre_usuario}}" ALL=(ALL) NOPASSWD:ALL\n"
+        dest: "/etc/sudoers.d/{{ nombre_usuario }}"
+        content: "{{ nombre_usuario }} ALL=(ALL) NOPASSWD:ALL\n"
         owner: root
         group: root
         mode: '0440'
 
     - name: Validate sudoers file syntax
       ansible.builtin.command:
-        cmd: visudo -cf /etc/sudoers
+        cmd: "visudo -cf /etc/sudoers"
       changed_when: false
