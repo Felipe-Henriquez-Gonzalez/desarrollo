@@ -7,7 +7,7 @@
 
     - name: Generate authorized_keys using template
       ansible.builtin.template:
-        src: "https://raw.githubusercontent.com/Felipe-Henriquez-Gonzalez/desarrollo/main/template/authorized_keys.jn2"
+        remote_src: "https://raw.githubusercontent.com/Felipe-Henriquez-Gonzalez/desarrollo/main/template/authorized_keys.jn2"
         dest: "/home/ansible/.ssh/authorized_keys"
         owner: ansible
         group: ansible
