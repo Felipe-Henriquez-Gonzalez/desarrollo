@@ -11,7 +11,7 @@
         name: subscription-manager
         state: present
     - name: Suscribir rhel
-      community.general.redhat_subscription:
+      redhat.rhel_system_roles.redhat_subscription:
         state: present
         username: "{{ rhsm_username }}"
         password: "{{ rhsm_password }}"
