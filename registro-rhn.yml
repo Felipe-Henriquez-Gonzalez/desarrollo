@@ -14,7 +14,7 @@
     - name: Registrar el sistema con subscription-manager
       ansible.builtin.command:
         cmd: >
-          subscription-manager register
+          sudo subscription-manager register
           --username={{ rhsm_username }}
           --password={{ rhsm_password }}
         creates: /etc/pki/entitlement
