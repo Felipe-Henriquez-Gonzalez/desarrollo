@@ -1,0 +1,22 @@
+---
+- name: Registrar sistema RHEL con subscription-manager
+  hosts: all
+  become: true
+  vars:
+    rhsm_username: "{{tu_usuario}}"  # Cambia esto por tu usuario de Red Hat
+    rhsm_password: "{{tu_contraseña}}"  # Cambia esto por tu contraseña
+  tasks:
+    - name: Asegurar que subscription-manager está instalado
+      ansible.builtin.yum:
+        name: subscription-manager
+        state: present
+
+    - name: Registrar el sistema con subscription-manager
+      ansible.builtin.command:
+        cmd: >
+          subscription-manager register
+          --username={{ rhsm_username }}
+          --password={{ rhsm_password }}
+        creates: /etc/pki/entitlement
+      register: registration_output
+      failed_when: "'The system has been registered' not in registration_output.stdout and 'is already registered' not in registration_output.stdout"
