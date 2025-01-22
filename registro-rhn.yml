@@ -10,13 +10,9 @@
       ansible.builtin.yum:
         name: subscription-manager
         state: present
-
-    - name: Registrar el sistema con subscription-manager
-      ansible.builtin.command:
-        cmd: >
-          sudo subscription-manager register
-          --username={{ rhsm_username }}
-          --password={{ rhsm_password }}
-        creates: /etc/pki/entitlement
-      register: registration_output
-      failed_when: "'The system has been registered' not in registration_output.stdout and 'is already registered' not in registration_output.stdout"
+    - name: Suscribir rhel
+      community.general.redhat_subscription:
+        state: present
+        username: "{{ rhsm_username }}"
+        password: "{{ rhsm_password }}"
+        auto_attach: true
