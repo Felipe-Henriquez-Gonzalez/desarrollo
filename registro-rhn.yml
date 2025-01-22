@@ -3,8 +3,8 @@
   hosts: all
   become: true
   vars:
-    rhsm_username: "{{tu_usuario}}"  # Cambia esto por tu usuario de Red Hat
-    rhsm_password: "{{tu_contraseña}}"  # Cambia esto por tu contraseña
+    rhsm_username: "{{ tu_usuario }}"  # Cambia esto por tu usuario de Red Hat
+    rhsm_password: "{{ tu_contraseña }}"  # Cambia esto por tu contraseña
   tasks:
     - name: Asegurar que subscription-manager está instalado
       ansible.builtin.yum:
