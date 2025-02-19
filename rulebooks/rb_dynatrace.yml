@@ -5,7 +5,6 @@
     - dynatrace.event_driven_ansible.dt_webhook: # use dt_webhook as source for tests with local ansible-rulebook
         host: 0.0.0.0
         port: 5000
-        token: '{{ var_eda_token }}'
 
   rules:
     - name: API Endpoint not available
