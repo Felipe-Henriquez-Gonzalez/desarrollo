@@ -16,12 +16,6 @@
         dest: "/tmp/main.zip"
         mode: '0644'
 
-    - name: Crear directorio de destino si no existe
-      ansible.builtin.file:
-        path: "/var/www/html"
-        state: directory
-        mode: '0755'
-
     - name: Descomprimir archivo ZIP en /var/www/html
       ansible.builtin.unarchive:
         src: "/tmp/main.zip"
