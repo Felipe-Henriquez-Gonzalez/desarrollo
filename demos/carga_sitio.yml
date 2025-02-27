@@ -20,8 +20,6 @@
       ansible.builtin.file:
         path: "/var/www/html"
         state: directory
-        owner: www-data
-        group: www-data
         mode: '0755'
 
     - name: Descomprimir archivo ZIP en /var/www/html
@@ -29,8 +27,6 @@
         src: "/tmp/main.zip"
         dest: "/var/www/html"
         remote_src: yes
-        owner: www-data
-        group: www-data
         mode: '0644'
 
     - name: Descomprimir archivo ZIP en /var/www/html
@@ -38,8 +34,6 @@
         src: "/tmp/main.zip"
         dest: "/var/www/html"
         remote_src: yes
-        owner: www-data
-        group: www-data
         mode: '0644'
 
     - name: Eliminar archivo ZIP después de la extracción
