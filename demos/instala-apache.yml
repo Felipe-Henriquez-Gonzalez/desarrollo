@@ -7,16 +7,6 @@
       ansible.builtin.dnf:
         name:
           - httpd
-          - mod_ssl
-          - mod_proxy
-          - mod_proxy_http
-          - mod_proxy_fcgi
-          - mod_http2
-          - mod_rewrite
-          - mod_headers
-          - mod_deflate
-          - mod_expires
-          - mod_security
         state: present
 
     - name: Habilitar y arrancar el servicio httpd
