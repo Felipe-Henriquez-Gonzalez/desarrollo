@@ -1,0 +1,53 @@
+---
+- name: Descargar y descomprimir un archivo ZIP en /var/www/html
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalar dependencias necesarias
+      ansible.builtin.package:
+        name:
+          - unzip
+          - wget
+        state: present
+
+    - name: Descargar archivo ZIP
+      ansible.builtin.get_url:
+        url: "https://github.com/Felipe-Henriquez-Gonzalez/desarrollo/blob/main/demos/main.zip"
+        dest: "/tmp/main.zip"
+        mode: '0644'
+
+    - name: Crear directorio de destino si no existe
+      ansible.builtin.file:
+        path: "/var/www/html"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Descomprimir archivo ZIP en /var/www/html
+      ansible.builtin.unarchive:
+        src: "/tmp/main.zip"
+        dest: "/var/www/html"
+        remote_src: yes
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Descomprimir archivo ZIP en /var/www/html
+      ansible.builtin.unarchive:
+        src: "/tmp/main.zip"
+        dest: "/var/www/html"
+        remote_src: yes
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Eliminar archivo ZIP después de la extracción
+      ansible.builtin.file:
+        path: "/tmp/main.zip"
+        state: absent
+
+    - name: Eliminar archivo ZIP después de la extracción
+      ansible.builtin.file:
+        path: "/tmp/main.zip"
+        state: absent
