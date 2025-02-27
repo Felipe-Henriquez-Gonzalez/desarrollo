@@ -1,8 +1,7 @@
 ---
 - name: Instalar Apache y módulos en RHEL 9
   hosts: servidores_web
-  become: true  # Ejecutar como root
-
+  become: true  
   tasks:
     - name: Instalar Apache y módulos disponibles
       ansible.builtin.dnf:
