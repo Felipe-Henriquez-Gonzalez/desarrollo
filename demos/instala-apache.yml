@@ -1,0 +1,41 @@
+---
+- name: Instalar Apache y módulos en RHEL 9
+  hosts: servidores_web
+  become: true  # Ejecutar como root
+
+  tasks:
+    - name: Instalar Apache y módulos disponibles
+      ansible.builtin.dnf:
+        name:
+          - httpd
+          - mod_ssl
+          - mod_proxy
+          - mod_proxy_http
+          - mod_proxy_fcgi
+          - mod_http2
+          - mod_rewrite
+          - mod_headers
+          - mod_deflate
+          - mod_expires
+          - mod_security
+        state: present
+
+    - name: Habilitar y arrancar el servicio httpd
+      ansible.builtin.systemd:
+        name: httpd
+        enabled: yes
+        state: started
+
+    - name: Permitir tráfico HTTP en el firewall
+      ansible.builtin.firewalld:
+        service: http
+        permanent: true
+        state: enabled
+      notify: Recargar firewall
+
+    - name: Verificar que Apache está corriendo
+      ansible.builtin.service_facts:
+
+  handlers:
+    - name: Recargar firewall
+      ansible.builtin.command: firewall-cmd --reload
