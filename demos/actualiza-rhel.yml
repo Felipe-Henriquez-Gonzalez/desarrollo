@@ -1,0 +1,10 @@
+---
+- name: Actualiza rhel a la ultima version
+  hosts: "{{ _host }}"
+  gather_facts: false
+
+  tasks:
+    - name: actualiza rhel a la ultima version 
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
