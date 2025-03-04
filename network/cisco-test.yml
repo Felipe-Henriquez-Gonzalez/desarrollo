@@ -1,7 +1,6 @@
---
-- name: cisco test
+- name: Test de conectividad Cisco C8000V
   hosts: all
-  gather_facts: no  
+  gather_facts: no
   tasks:
     - name: Verificar conectividad con "show version"
       cisco.ios.ios_command:
