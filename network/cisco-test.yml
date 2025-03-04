@@ -1,0 +1,14 @@
+--
+- name: cisco test
+  hosts: all
+  gather_facts: no  
+  tasks:
+    - name: Verificar conectividad con "show version"
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: output
+
+    - name: Mostrar resultado
+      debug:
+        var: output.stdout_lines
