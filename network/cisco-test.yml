@@ -1,5 +1,5 @@
 - name: Test de conectividad Cisco C8000V
-  hosts: all
+  hosts: cisco
   gather_facts: no
   tasks:
     - name: Verificar conectividad con "show version"
