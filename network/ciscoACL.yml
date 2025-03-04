@@ -1,0 +1,28 @@
+- name: Configurar ACL en Cisco IOS XR
+  hosts: cisco
+  gather_facts: no
+  tasks:
+    - name: Crear ACL extendida
+      cisco.iosxr.iosxr_acl:
+        config:
+          - afi: ipv4
+            name: ACL_EXTENDIDA
+            aces:
+              - sequence: 10
+                grant: permit
+                protocol: tcp
+                source: 
+                  address: 192.168.1.0
+                  wildcard_bits: 0.0.0.255
+                destination:
+                  any: true
+                destination_port:
+                  eq: 80
+              - sequence: 20
+                grant: deny
+                protocol: ip
+                source:
+                  any: true
+                destination:
+                  any: true
+        state: merged
