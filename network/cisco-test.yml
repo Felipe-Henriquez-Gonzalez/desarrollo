@@ -4,8 +4,8 @@
   tasks:
     - name: Verificar conectividad con "show version"
       cisco.iosxr.iosxr_command:
-        commands:
-          - show version
+        commands: show version
+        wait_for: result[0] contains IOS-XR
       register: output
 
     - name: Mostrar resultado
