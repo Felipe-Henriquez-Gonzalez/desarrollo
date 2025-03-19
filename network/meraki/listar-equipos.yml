@@ -4,7 +4,7 @@
   tasks:
 
     - name: Obtener información de la red Meraki
-      cisco.meraki.network_info:
+      cisco.meraki.networks_info:
         organizationId: "{{ org_id }}"
         auth_key: "{{ meraki_api_key }}"
       register: meraki_networks
