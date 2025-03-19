@@ -1,6 +1,7 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
   gather_facts: no
+  ansible_connection: ansible.netcommon.network_cli
   tasks:
     - name: Verificar conectividad con "show version"
       cisco.iosxr.iosxr_command:
