@@ -1,0 +1,14 @@
+- name: Administrar Cisco Meraki con Ansible
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: Obtener información de la red Meraki
+      cisco.meraki.network_info:
+        organizationId: "{{ org_id }}"
+        auth_key: "{{ meraki_api_key }}"
+      register: meraki_networks
+
+    - name: Mostrar redes disponibles
+      debug:
+        var: meraki_networks
