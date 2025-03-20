@@ -1,9 +1,10 @@
 ---
 - name: Get information from Meraki console
   hosts: all
+  delegate_to: localhost
   tasks:
     - name: Get networks
-      cisco.meraki.meraki_networks:
+      cisco.meraki.meraki_network:
         auth_key: "{{ _auth_key_ }}"
         state: query
       register: networks
