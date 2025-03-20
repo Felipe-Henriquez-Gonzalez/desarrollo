@@ -1,15 +1,17 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
   gather_facts: no
-  #ansible_connection: ansible.netcommon.network_cli
+  
   tasks:
-    - name: Verificar conectividad con "show version"
-      connection: ansible.netcommon.network_cli
-      cisco.iosxr.iosxr_command:
-        commands: show version
-        wait_for: result[0] contains IOS-XR
+  - name: Enable NETCONF
+    connection: ansible.netcommon.network_cli
+    cisco.iosxr.iosxr_netconf:
+    when: ansible_network_os == 'cisco.iosxr.iosxr'
+  - name: Verificar conectividad con "show version"
+    cisco.iosxr.iosxr_command:
+      commands: show version
       register: output
 
-    - name: Mostrar resultado
+  - name: Mostrar resultado
       debug:
         var: output.stdout_lines
