@@ -1,18 +1,7 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
   connection: local
-  gather_facts: false
-  vars:
-    ansible_network_os: cisco.iosxr.iosxr
   tasks:
-#    - name: Enable NETCONF
-#      connection: ansible.netcommon.network_cli
-#      cisco.iosxr.iosxr_netconf:
-#      
-#    - name: Gather all network resource and minimal legacy facts [Cisco IOS]      
-#      cisco.ios.ios_facts:
-#        gather_subset: min
-#        gather_network_resources: all
 
     - name: Verificar conectividad con "show version"
       cisco.iosxr.iosxr_command:
