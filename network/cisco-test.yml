@@ -1,6 +1,5 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
-  connection: local
   tasks:
 
     - name: Verificar conectividad con "show version"
