@@ -5,7 +5,7 @@
 
     - name: Obtener información de las redes en la organización Meraki
       cisco.meraki.networks_info:
-        organization_id: "{{ org_id }}"
+        organizationId: "{{ org_id }}"
         meraki_api_key: "{{ var_api_key }}"
         state: query
       register: meraki_networks
