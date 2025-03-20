@@ -3,14 +3,14 @@
   gather_facts: false
 
   tasks:
+    - name: Enable NETCONF
+      connection: ansible.netcommon.network_cli
+      cisco.iosxr.iosxr_netconf:
+      
     - name: Gather all network resource and minimal legacy facts [Cisco IOS]      
       cisco.ios.ios_facts:
         gather_subset: min
         gather_network_resources: all
-    - name: Enable NETCONF
-      connection: ansible.netcommon.network_cli
-      cisco.iosxr.iosxr_netconf:
-     # when: ansible_network_os == 'cisco.iosxr.iosxr'
 
     - name: Verificar conectividad con "show version"
       cisco.iosxr.iosxr_command:
