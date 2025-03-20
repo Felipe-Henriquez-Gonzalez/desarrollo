@@ -2,21 +2,9 @@
 - name: Get information from Meraki console
   hosts: all
   tasks:
-    - name: Get organizations
-      cisco.meraki.meraki_organization:
-        auth_key: "{{ _auth_key_ }}"
-        state: query
-      register: organizations
     - name: Get networks
-      cisco.meraki.meraki_network:
+      cisco.meraki.meraki_networks:
         auth_key: "{{ _auth_key_ }}"
         state: query
-        org_name: "{{ organizations.data[0].name }}"
       register: networks
-    - name: Get devices in a network
-      cisco.meraki.meraki_device:
-        auth_key: "{{ _auth_key_ }}"
-        state: query
-        org_name: "{{ organizations.data[0].name }}"
-        net_name: "{{ networks.data[0].name }}"
-      register: devices
+   
