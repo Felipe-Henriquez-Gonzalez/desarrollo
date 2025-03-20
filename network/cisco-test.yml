@@ -1,7 +1,7 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
+  connection: local
   gather_facts: false
-  connection: ansible.netcommon.netconf
   vars:
     ansible_network_os: cisco.iosxr.iosxr
   tasks:
