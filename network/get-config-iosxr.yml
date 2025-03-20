@@ -1,0 +1,14 @@
+---
+- name: Configure IOS-XR devices
+  hosts: routers
+  gather_facts: no
+  # connection local instead of network_cli
+  connection: local
+
+  tasks:
+    - name: collect facts from IOS-XR routers
+      iosxr_facts:
+        gather_subset:
+        - config
+        provider: ""
+      register: config
