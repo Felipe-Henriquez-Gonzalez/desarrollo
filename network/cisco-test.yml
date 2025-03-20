@@ -1,8 +1,12 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
-  gather_facts: yes
+  gather_facts: false
 
   tasks:
+    - name: Gather all network resource and minimal legacy facts [Cisco IOS]      
+      cisco.ios.ios_facts:
+        gather_subset: min
+        gather_network_resources: all
     - name: Enable NETCONF
       connection: ansible.netcommon.network_cli
       cisco.iosxr.iosxr_netconf:
