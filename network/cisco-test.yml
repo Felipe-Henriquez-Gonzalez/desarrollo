@@ -6,7 +6,7 @@
     - name: Enable NETCONF
       connection: ansible.netcommon.network_cli
       cisco.iosxr.iosxr_netconf:
-      when: ansible_network_os == 'cisco.iosxr.iosxr'
+     # when: ansible_network_os == 'cisco.iosxr.iosxr'
 
     - name: Verificar conectividad con "show version"
       cisco.iosxr.iosxr_command:
