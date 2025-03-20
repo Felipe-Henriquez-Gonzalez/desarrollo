@@ -6,6 +6,7 @@
       cisco.meraki.organizations_devices_info:
         meraki_suppress_logging: true
         organizationId: "{{ org_id }}"
+        meraki_api_key: "{{ api_key }}"
         total_pages: -1
       register: org_devices
     - name: Show All Devices
