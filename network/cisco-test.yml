@@ -6,7 +6,7 @@
     - name: Enable NETCONF
       connection: ansible.netcommon.network_cli
       cisco.iosxr.iosxr_netconf:
-      ansible_network_os: 'cisco.iosxr.iosxr'
+        ansible_network_os: 'cisco.iosxr.iosxr'
     - name: Gather all network resource and minimal legacy facts [Cisco IOS]      
       cisco.ios.ios_facts:
         gather_subset: min
