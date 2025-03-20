@@ -1,5 +1,6 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
+    delegate_to: localhost
   tasks:
 
     - name: Verificar conectividad con "show version"
