@@ -3,10 +3,11 @@
   gather_facts: no
   tasks:
 
-    - name: Obtener información de la red Meraki
-      cisco.meraki.networks_info:
-        organizationId: "{{ org_id }}"
+    - name: Obtener información de las redes en la organización Meraki
+      cisco.meraki.organization_networks:
+        organization_id: "{{ org_id }}"
         auth_key: "{{ meraki_api_key }}"
+        state: query
       register: meraki_networks
 
     - name: Mostrar redes disponibles
