@@ -1,6 +1,6 @@
 ---
 - name: Configure IOS-XR devices
-  hosts: routers
+  hosts: cisco
   gather_facts: no
   # connection local instead of network_cli
   connection: local
