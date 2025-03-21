@@ -6,6 +6,7 @@
       cisco.meraki.networks:
         state: present
         organizationId: "{{ org_id }}"
+        meraki_api_key: "{{ var_api_key }}"
         name: Made With Ansible networks
         notes: Creado_con_ansible
         productTypes:
