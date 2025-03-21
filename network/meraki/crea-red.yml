@@ -1,0 +1,15 @@
+- name: crea Red
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Crear Red Meraki
+      cisco.meraki.networks:
+        state: present
+        organizationId: "{{ org_id }}"
+        name: Made With Ansible networks
+        notes: Creado_con_ansible
+        productTypes:
+          - switch
+          - appliance
+          - wireless
+        timeZone: Chile/Santiago
