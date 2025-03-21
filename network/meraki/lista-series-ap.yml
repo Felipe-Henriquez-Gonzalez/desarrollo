@@ -6,6 +6,7 @@
       cisco.meraki.organizations_devices_info:
         meraki_suppress_logging: true
         organizationId: "{{ org_id }}"
+        meraki_api_key: "{{ var_api_key }}"
         total_pages: -1
       register: result
     - name: Filter APs with "wireless" productTypes and get Serial Number
