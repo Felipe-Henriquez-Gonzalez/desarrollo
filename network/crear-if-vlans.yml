@@ -44,3 +44,4 @@
             state: active
             shutdown: disabled
             remote_span: true
+        state: merged
