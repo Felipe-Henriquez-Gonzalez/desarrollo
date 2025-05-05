@@ -3,8 +3,9 @@
   gather_facts: no
   tasks:
     - name: Verificar conectividad con "show version"
-      cisco.ios.ios_command:
-        commands: show version
+      cisco.ios.ios_facts:
+        gather_subset: min
+        gather_network_resources: all
       register: output
 
     - name: Mostrar resultado
