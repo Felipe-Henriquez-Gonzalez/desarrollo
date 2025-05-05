@@ -3,15 +3,13 @@
   hosts: cisco
   gather_facts: false
 
-  vars: # for execution environment
-  
+  vars:
     ansible_connection: ansible.netcommon.network_cli
     ansible_network_os: cisco.ios.ios
     ansible_become: yes
     ansible_become_method: enable
 
   tasks:
-
 
     - name: Crear interfaces loopback
       cisco.ios.ios_interfaces:
@@ -25,6 +23,7 @@
           - name: Loopback2
             description: Loopback de gestión 2
             enabled: true
+        state: merged
 
     - name: Crear VLANs
       cisco.ios.ios_vlans:
@@ -32,16 +31,10 @@
           - name: VLAN_325
             vlan_id: 325
             state: active
-            shutdown: disabled
-            remote_span: true
           - name: VLAN_440
             vlan_id: 440
             state: active
-            shutdown: disabled
-            remote_span: true
           - name: VLAN_660
             vlan_id: 660
             state: active
-            shutdown: disabled
-            remote_span: true
         state: merged
