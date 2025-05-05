@@ -12,7 +12,7 @@
 
   tasks:
 
-  - name: Gather only the config and default facts
+  - name: obtener la configuracion
     cisco.ios.ios_facts:
 #      gather_subset:
 #      - config
