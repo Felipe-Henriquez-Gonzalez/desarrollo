@@ -1,8 +1,7 @@
 - name: Test de conectividad Cisco C8000V
   hosts: cisco
-  gather_facts: no
   tasks:
-    - name: Verificar conectividad con "show version"
+    - name: Verificar 
       cisco.ios.ios_facts:
         gather_subset: min
         gather_network_resources: all
