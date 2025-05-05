@@ -28,13 +28,10 @@
     - name: Crear VLANs
       cisco.ios.ios_vlans:
         config:
-          - name: VLAN_325
+          - name: VLAN325
             vlan_id: 325
-            state: active
-          - name: VLAN_440
+          - name: VLAN440
             vlan_id: 440
-            state: active
-          - name: VLAN_660
+          - name: VLAN660
             vlan_id: 660
-            state: active
         state: merged
