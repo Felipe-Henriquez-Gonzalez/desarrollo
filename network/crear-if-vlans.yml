@@ -26,7 +26,7 @@
             description: Loopback de gestión 2
             enabled: true
 
-    - name: Crear VLAN 325
+    - name: Crear VLANs
       cisco.ios.ios_vlans:
         config:
           - name: VLAN_325
@@ -34,19 +34,11 @@
             state: active
             shutdown: disabled
             remote_span: true
-
-    - name: Crear VLAN 440
-      cisco.ios.ios_vlans:
-        config:
           - name: VLAN_440
             vlan_id: 440
             state: active
             shutdown: disabled
             remote_span: true
-
-    - name: Crear VLAN 660
-      cisco.ios.ios_vlans:
-        config:
           - name: VLAN_660
             vlan_id: 660
             state: active
