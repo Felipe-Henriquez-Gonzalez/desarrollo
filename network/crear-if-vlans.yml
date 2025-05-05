@@ -25,13 +25,3 @@
             enabled: true
         state: merged
 
-    - name: Crear VLANs
-      cisco.ios.ios_vlans:
-        config:
-          - name: VLAN325
-            vlan_id: 325
-          - name: VLAN440
-            vlan_id: 440
-          - name: VLAN660
-            vlan_id: 660
-        state: merged
