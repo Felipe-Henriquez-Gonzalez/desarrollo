@@ -17,24 +17,7 @@
           "{{ result.meraki_response | selectattr('productTypes',
           'contains', 'wireless') | list }}"
 
-    - name: Create Mobile/PSK SSID
-        cisco.meraki.networks_wireless_ssids:
-        organizationId: "{{ org_id }}"
-        meraki_api_key: "{{ var_api_key }}"
-        state: present
-        enabled: true
-        name: "{{ corp_name }}-legacy"
-        networkId: "{{ item.id }}"
-        number: 2
-        ipAssignmentMode: Bridge mode
-        defaultVlanId: 200
-        useVlanTagging: true
-        authMode: psk
-        encryptionMode: wpa
-        psk: SuperSecretPreSharedKey
-      loop: "{{ filtered_networks }}"
-      loop_control:
-        label: "{{ item.id }}"
+
     - name: Create Guest SSID
       cisco.meraki.networks_wireless_ssids:
         organizationId: "{{ org_id }}"
