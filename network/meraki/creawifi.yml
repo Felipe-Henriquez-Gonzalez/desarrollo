@@ -1,9 +1,9 @@
 - name: Play Name
   hosts: localhost
-  vars_files:
-    - credentials.yml
   vars:
     corp_name: "{{ corp }}"
+    org_id: "{{ org_idd }}"
+    meraki_api_key: "{{ var_api_key }}"
   gather_facts: false
   tasks:
     - name: Get Organization Networks
