@@ -19,4 +19,4 @@
     register: ios_config
   - name: Show ios config
     debug:
-      msg: "{{ ios_config.stdout }}"
+      msg: ios_config.stdout
