@@ -14,9 +14,9 @@
 
   - name: obtener la configuracion
     cisco.ios.ios_facts:
-#      gather_subset:
-#      - config
-
-  - name: Show facts
+      gather_subset:
+        - config
+    register: ios_config
+  - name: Show ios config
     debug:
-      msg: "{{ ansible_facts }}"
+      msg: "{{ ios_config | to_nice_json }}"
