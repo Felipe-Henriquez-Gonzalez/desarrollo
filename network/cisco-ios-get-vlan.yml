@@ -12,11 +12,11 @@
 
   tasks:
 
-  - name: obtener la configuracion
-    cisco.ios.ios_facts:
-      gather_subset: config
-      gather_network_resources: "{{ network_resource | default('all') }}"
-    register: ios_config
-  - name: Show ios config
-    debug:
-      msg: "{{ ios_config }}"
+    - name: Obtener VLANs configuradas
+      cisco.ios.ios_vlans:
+        state: gathered
+      register: vlan_info
+
+    - name: Mostrar información de VLANs
+      debug:
+        var: vlan_info
