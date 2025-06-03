@@ -1,0 +1,22 @@
+---
+- name: Cisco show version example
+  hosts: cisco
+  gather_facts: true
+
+  vars: # for execution environment
+  
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_become: yes
+    ansible_become_method: enable
+
+  tasks:
+
+  - name: obtener la configuracion
+    cisco.ios.ios_facts:
+      gather_subset: config
+      gather_network_resources: "{{ network_resource | default('all') }}"
+    register: ios_config
+  - name: Show ios config
+    debug:
+      msg: "{{ ios_config }}"
