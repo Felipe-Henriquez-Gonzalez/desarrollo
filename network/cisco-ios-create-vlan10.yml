@@ -18,7 +18,7 @@
             name: VLAN_10
             state: active
             shutdown: disabled
-            
+        state: merged   
     - name: Obtener VLANs configuradas
       cisco.ios.ios_vlans:
         state: gathered
