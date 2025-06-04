@@ -18,7 +18,7 @@
           - show running-config
       register: vlan_info
 
-    - name: Mostrar información de VLANs
+    - name: show running-config
       debug:
         var: vlan_info
     - name: pasar el dato a la siguiente etapa del workflow
