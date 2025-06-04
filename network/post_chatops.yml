@@ -12,7 +12,7 @@
           Content-Type: "application/json"
         body: >
           {
-            "text": "Hello, this is some text\nThis is more text. 🎉"
+            "text": "{{ vlan_data }}"
           }
         body_format: json
         validate_certs: no
