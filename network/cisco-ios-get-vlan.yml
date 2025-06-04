@@ -20,3 +20,7 @@
     - name: Mostrar información de VLANs
       debug:
         var: vlan_info
+    - name: pasar el dato a la siguiente etapa del workflow
+      ansible.builtin.set_stats:
+        data: 
+          csr_data: "{{ vlan_info.stdout }}"
