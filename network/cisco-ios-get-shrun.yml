@@ -15,7 +15,7 @@
     - name: Ejecutar comando 'show running-config'
       cisco.ios.ios_command:
         commands:
-          - show running-config
+          - show interface brief
       register: vlan_info
 
     - name: Mostrar información de VLANs
