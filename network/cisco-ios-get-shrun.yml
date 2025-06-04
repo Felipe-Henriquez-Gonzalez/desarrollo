@@ -12,9 +12,10 @@
 
   tasks:
 
-    - name: Obtener VLANs configuradas
-      cisco.ios.ios_vlans:
-        state: gathered
+    - name: Ejecutar comando 'show running-config'
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
       register: vlan_info
 
     - name: Mostrar información de VLANs
