@@ -1,0 +1,24 @@
+---
+- name: Enviar POST a webhook con JSON usando Ansible
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Enviar texto a webhook chatops
+      ansible.builtin.uri:
+        url: "https://rhel02.lab.local/hooks/ny9957benjbt5yyxbmjua8pe6o"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body: >
+          {
+            "text": "Hello, this is some text\nThis is more text. 🎉"
+          }
+        body_format: json
+        validate_certs: no
+        return_content: yes
+      register: response
+
+    - name: Mostrar respuesta del servidor
+      ansible.builtin.debug:
+        var: response.content
