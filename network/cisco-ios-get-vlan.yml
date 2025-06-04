@@ -22,5 +22,5 @@
         var: vlan_info
     - name: pasar el dato a la siguiente etapa del workflow
       ansible.builtin.set_stats:
-        data: 
-          _vlan-data: "{{ vlan_info }}"
+        data:
+          vlan_data: "{{ vlan_info }}"
