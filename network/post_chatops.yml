@@ -6,7 +6,7 @@
   tasks:
     - name: Enviar texto a webhook chatops
       ansible.builtin.uri:
-        url: "https://rhel02.lab.local/hooks/ny9957benjbt5yyxbmjua8pe6o"
+        url: "{{ _url }}"
         method: POST
         headers:
           Content-Type: "application/json"
