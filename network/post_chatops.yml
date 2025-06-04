@@ -12,7 +12,7 @@
           Content-Type: "application/json"
         body: >
           {
-            "text": "{{ vlan_data }}"
+            "text": "{{ vlan_data.stdout }}"
           }
         body_format: json
         validate_certs: no
