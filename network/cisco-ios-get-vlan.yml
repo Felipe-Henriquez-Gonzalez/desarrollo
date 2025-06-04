@@ -23,4 +23,4 @@
     - name: pasar el dato a la siguiente etapa del workflow
       ansible.builtin.set_stats:
         data: 
-          vlan-data: "{{ vlan_info }}"
+        _vlan-data: "{{ vlan_info }}"
