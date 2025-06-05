@@ -1,13 +1,13 @@
 ---
-- name: Cisco show version example
+- name: create vlan
   hosts: cisco
   gather_facts: false
 
   vars:
     ansible_connection: ansible.netcommon.network_cli
     ansible_network_os: cisco.ios.ios
-#    ansible_become: yes
-#    ansible_become_method: enable
+    ansible_become: yes
+    ansible_become_method: enable
 
   tasks:
     - name: Create vlan10
