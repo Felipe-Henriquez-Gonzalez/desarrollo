@@ -15,18 +15,7 @@
         config:
           - name: VLAN10
             vlan_id: 10
+            state: active
         state: merged   
 
-    - name: Obtener VLANs configuradas
-      cisco.ios.ios_vlans:
-        state: gathered
-      register: vlan_info
-
-    - name: Mostrar información de VLANs
-      debug:
-        var: vlan_info
-
-    - name: Pasar el dato a la siguiente etapa del workflow
-      ansible.builtin.set_stats:
-        data:
-          vlan_data: "{{ vlan_info }}"
+  
