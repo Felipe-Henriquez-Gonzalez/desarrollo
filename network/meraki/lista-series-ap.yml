@@ -18,3 +18,8 @@
     - name: Show All Devices
       ansible.builtin.debug:
         msg: "{{ aps }}"
+
+    - name: pasar el dato a la siguiente etapa del workflow
+      ansible.builtin.set_stats:
+        data:
+          vlan_data: "{{ aps }}"
