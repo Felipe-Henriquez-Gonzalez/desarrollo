@@ -14,7 +14,7 @@
       cisco.ios.ios_vlans:
         config:
           - vlan_id: 10
-            name: VLAN_10
+            name: VLAN10
             state: active
             shutdown: disabled
         state: merged   
