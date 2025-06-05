@@ -15,8 +15,6 @@
         config:
           - name: VLAN10
             vlan_id: 10
-            state: active
-            shutdown: disabled
         state: merged   
 
     - name: Obtener VLANs configuradas
