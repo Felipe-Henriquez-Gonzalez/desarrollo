@@ -12,4 +12,9 @@
     - name: Show All Devices
       ansible.builtin.debug:
         msg: "{{ org_devices }}"
+
+    - name: pasar el dato a la siguiente etapa del workflow
+      ansible.builtin.set_stats:
+        data:
+          vlan_data: "{{ org_devices }}"
    
