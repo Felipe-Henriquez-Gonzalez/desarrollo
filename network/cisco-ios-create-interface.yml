@@ -3,18 +3,17 @@
   hosts: cisco
   gather_facts: true
 
-  vars: # for execution environment
-  
+  vars:
     ansible_connection: ansible.netcommon.network_cli
     ansible_network_os: cisco.ios.ios
     ansible_become: yes
     ansible_become_method: enable
 
   tasks:
-      - name: Configurar interfaz Gigabitdummie
+    - name: Configurar interfaz GigabitEthernet0/1
       cisco.ios.ios_interfaces:
         config:
-          - name: Gigabitdummie
+          - name: GigabitEthernet0/1
             description: "Puerto de usuarios"
             enabled: true
             mtu: 1500
@@ -23,7 +22,12 @@
     - name: Obtener interfaces configuradas
       cisco.ios.ios_interfaces:
         state: gathered
-      register: vlan_info
+      register: interfaces_info
+
+    - name: Mostrar información de interfaces
+      debug:
+        var: vlan_info
+
 
     - name: Mostrar información de interfaces
       debug:
