@@ -12,12 +12,11 @@
   tasks:
     - name: Create 
       cisco.ios.ios_vlans:
-        state: merged
         config:
           - name: vlan10
             vlan_id: 10
             shutdown: disabled
             state: active
-
+        state: merged
 
   
