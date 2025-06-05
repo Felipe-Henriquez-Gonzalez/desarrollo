@@ -11,10 +11,10 @@
     ansible_become_method: enable
 
   tasks:
-      - name: Configurar interfaz GigabitEthernet1/0/10
+      - name: Configurar interfaz Gigabitdummie
       cisco.ios.ios_interfaces:
         config:
-          - name: GigabitEthernet1/0/10
+          - name: Gigabitdummie
             description: "Puerto de usuarios"
             enabled: true
             mtu: 1500
