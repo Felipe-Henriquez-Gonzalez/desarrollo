@@ -11,10 +11,10 @@
 
   tasks:
     - name: Crear VLAN 10 con nombre VLAN_10
-      ios_vlans:
+      cisco.ios.ios_vlans:
         config:
-          - vlan_id: 10
-            name: VLAN10
+          - name: VLAN10
+            vlan_id: 10
             state: active
             shutdown: disabled
         state: merged   
