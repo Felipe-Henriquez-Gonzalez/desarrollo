@@ -15,7 +15,9 @@
         state: merged
         config:
           - name: vlan10
-          vlan_id: 10
+            vlan_id: 10
+            shutdown: disabled
+            state: active
 
 
   
