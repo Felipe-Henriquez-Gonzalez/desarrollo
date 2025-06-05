@@ -10,12 +10,11 @@
     ansible_become_method: enable
 
   tasks:
-    - name: Crear VLAN 10 con nombre VLAN_10
+    - name: Create vlan10
       cisco.ios.ios_vlans:
         config:
-          - name: VLAN10
+          - name: vlan10
             vlan_id: 10
-            state: active
-        state: merged   
+        state: merged
 
   
