@@ -1,10 +1,9 @@
 ---
 - name: Cisco show version example
   hosts: cisco
-  gather_facts: true
+  gather_facts: false
 
-  vars: # for execution environment
-  
+  vars:
     ansible_connection: ansible.netcommon.network_cli
     ansible_network_os: cisco.ios.ios
     ansible_become: yes
@@ -19,6 +18,7 @@
             state: active
             shutdown: disabled
         state: merged   
+
     - name: Obtener VLANs configuradas
       cisco.ios.ios_vlans:
         state: gathered
@@ -27,7 +27,8 @@
     - name: Mostrar información de VLANs
       debug:
         var: vlan_info
-    - name: pasar el dato a la siguiente etapa del workflow
+
+    - name: Pasar el dato a la siguiente etapa del workflow
       ansible.builtin.set_stats:
         data:
           vlan_data: "{{ vlan_info }}"
