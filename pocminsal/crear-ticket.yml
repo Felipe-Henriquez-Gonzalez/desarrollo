@@ -1,0 +1,36 @@
+---
+- name: Crear issue en Redmine usando la API REST
+  hosts: localhost
+  gather_facts: no
+  vars:
+    redmine_url: "https://redmine.apps.ocp4.minsal.devqa/"  # <-- cambia por tu URL
+    api_key: "{{ API_KEY }}"                         # <-- reemplaza con tu API Key
+    project_id: "ansible"                            # <-- ID o identificador del proyecto
+    issue_subject: "{{ ticket_subjet }}"
+    issue_description: "Este ticket fue creado automáticamente usando Ansible."
+    tracker_id: 1                                 # 1 = Bug, 2 = Feature, etc.
+    priority_id: 4                                # 1 = Low, 4 = Normal, etc.
+
+  tasks:
+    - name: Crear un ticket en Redmine
+      uri:
+        url: "{{ redmine_url }}/issues.json"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+          X-Redmine-API-Key: "{{ api_key }}"
+        body_format: json
+        body:
+          issue:
+            project_id: "{{ project_id }}"
+            subject: "{{ issue_subject }}"
+            description: "{{ issue_description }}"
+            tracker_id: "{{ tracker_id }}"
+            priority_id: "{{ priority_id }}"
+        status_code: 201
+        return_content: yes
+      register: redmine_response
+
+    - name: Mostrar respuesta de Redmine
+      debug:
+        var: redmine_response.json
