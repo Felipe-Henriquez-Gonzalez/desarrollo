@@ -28,6 +28,7 @@
             tracker_id: "{{ tracker_id }}"
             priority_id: "{{ priority_id }}"
         status_code: 201
+        validate_certs: no  # 👈 esta línea desactiva la verificación del certificado SSL
         return_content: yes
       register: redmine_response
 
