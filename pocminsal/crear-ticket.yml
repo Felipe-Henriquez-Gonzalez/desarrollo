@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: no
   vars:
-    redmine_url: "https://redmine.apps.ocp4.minsal.devqa/"  # <-- cambia por tu URL
+    redmine_url: "https://redmine.apps.ocp4.minsal.devqa"  # <-- cambia por tu URL
     api_key: "{{ API_KEY }}"                         # <-- reemplaza con tu API Key
     project_id: "ansible"                            # <-- ID o identificador del proyecto
     issue_subject: "{{ ticket_subjet }}"
