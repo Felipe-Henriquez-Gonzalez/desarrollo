@@ -7,9 +7,9 @@
     api_key: "{{ API_KEY }}"                         # <-- reemplaza con tu API Key
     project_id: "ansible"                            # <-- ID o identificador del proyecto
     issue_subject: "{{ ticket_subjet }}"
-    issue_description: "Este ticket fue creado automáticamente usando Ansible."
-    tracker_id: 1                                 # 1 = Bug, 2 = Feature, etc.
-    priority_id: 4                                # 1 = Low, 4 = Normal, etc.
+    issue_description: "{{ ticket_content }}"
+    tracker_id: "{{ tracker }}"                                 # 1 = Bug, 2 = Feature, etc.
+    priority_id: "{{ prioridad }}"                               # 1 = Low, 4 = Normal, etc.
 
   tasks:
     - name: Crear un ticket en Redmine
