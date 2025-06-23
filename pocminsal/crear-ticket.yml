@@ -14,7 +14,7 @@
   tasks:
     - name: Crear un ticket en Redmine
       uri:
-        url: "{{ redmine_url }}/issues.json"
+        url: "{{ redmine_url }}//issues.json"
         method: POST
         headers:
           Content-Type: "application/json"
