@@ -1,0 +1,88 @@
+---
+- name: Control de servicio mitch-fix
+  hosts: rb03
+  remote_user: jenkins-linux
+  become: yes
+  vars:
+    app_dir: /ruta/mitch-fix/latest_mitch-fix
+    log_dir: /caja/var/mitch-fix
+    pid_file: "{{ app_dir }}/fpid"
+
+  tasks:
+
+    - name: Verificar si fpid existe
+      stat:
+        path: "{{ pid_file }}"
+      register: fpid_status
+
+    - name: Leer PID si existe
+      command: cat "{{ pid_file }}"
+      register: pid_output
+      when: fpid_status.stat.exists
+      changed_when: false
+
+    - name: Validar si proceso está corriendo
+      shell: "ps -fu appusr | awk '{{ if ( $2 == \"{{ pid_output.stdout }}\" ) print }}' | wc -l"
+      register: ps_check
+      when: fpid_status.stat.exists
+      changed_when: false
+
+    - name: Subir proceso
+      shell: "./start.sh"
+      args:
+        chdir: "{{ app_dir }}"
+      when: estado == "subir" and ps_check.stdout|int == 0
+
+    - name: Bajar proceso
+      shell: "./stop.sh"
+      args:
+        chdir: "{{ app_dir }}"
+      when: estado == "bajar" and ps_check.stdout|int > 0
+
+    - name: Resetear proceso
+      shell: "./reset.sh"
+      args:
+        chdir: "{{ app_dir }}"
+      when: estado == "reset" and ps_check.stdout|int == 0
+
+    - name: Ver logs
+      shell: cat {{ log_dir }}/recep_siu.log && echo "---" && cat {{ log_dir }}/recep_siu.mon
+      register: log_output
+      when: estado == "verlog"
+      changed_when: false
+
+    - name: Mostrar logs
+      debug:
+        msg: "{{ log_output.stdout }}"
+      when: estado == "verlog"
+
+    - name: Depurar logs
+      block:
+        - name: Limpiar mitch-fix.log y mitch-fix.mon
+          shell: "cat /dev/null > {{ item }}"
+          loop:
+            - "{{ log_dir }}/mitch-fix.log"
+            - "{{ log_dir }}/mitch-fix.mon"
+
+        - name: Eliminar logs rotados
+          file:
+            path: "{{ item }}"
+            state: absent
+          loop: "{{ lookup('pipe', 'ls -1 ' ~ log_dir ~ '/mitch-fix.log.2* ' ~ log_dir ~ '/mitch-fix.mon.2*') | split('\n') }}"
+          ignore_errors: yes
+      when: estado == "depurolog"
+
+    - name: Depurar app
+      file:
+        path: "{{ app_dir }}/{{ item }}"
+        state: absent
+      loop: "{{ lookup('pipe', 'ls -1 ' ~ app_dir) | split('\n') }}"
+      when: estado == "depuroappl"
+
+#variables a cargar en Encuesta
+#estado=subir
+#estado=bajar
+#estado=reset
+#estado=verlog
+#estado=depurolog
+#estado=depuroappl
