@@ -1,0 +1,17 @@
+---
+- name: Control mitch-fix
+  job_template:
+    name: Control mitch-fix
+    description: Controla el servicio mitch-fix (subir, bajar, resetear, logs, depuración).
+    job_type: run
+    inventory: NombreDelInventario  # <-- Reemplaza por el nombre real
+    project: NombreDelProyecto      # <-- Reemplaza por el nombre real
+    playbook: playbooks/mitch-fix-control.yml
+    credentials:
+      - NombreDeCredencialSSH       # <-- Reemplaza por el nombre real
+    become_enabled: true
+    ask_variables_on_launch: true
+    limit: rb03
+    verbosity: 1
+    extra_vars: |
+      estado: subir
