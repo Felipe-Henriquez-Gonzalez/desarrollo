@@ -2,6 +2,7 @@
 - name: Actualiza rhel a la ultima version
   hosts: all
   gather_facts: false
+  become: true
 
   tasks:
     - name: actualiza rhel a la ultima version 
