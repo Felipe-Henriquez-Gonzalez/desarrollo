@@ -1,0 +1,19 @@
+---
+- name: Cambiar parametros de un usuario en linux (similar a usermod)
+  hosts: servidores_linux
+  become: yes
+  vars:
+    usuario_a_modificar: juan
+    nuevo_grupo_primario: other-group
+
+  tasks:
+    - name: Asegurar que el grupo "{{ nuevo_grupo_primario }}" existe
+      ansible.builtin.group:
+        name: "{{ nuevo_grupo_primario }}"
+        state: present
+
+    - name: Modificar el usuario "{{ usuario_a_modificar }}" para cambiar su grupo primario
+      ansible.builtin.user:
+        name: "{{ usuario_a_modificar }}"
+        group: "{{ nuevo_grupo_primario }}"
+        state: present
