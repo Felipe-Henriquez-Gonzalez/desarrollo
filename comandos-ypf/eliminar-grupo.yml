@@ -1,0 +1,12 @@
+---
+- name: Eliminar un grupo en Linux similar a groupdel
+  hosts: servidores_linux
+  become: yes
+  vars:
+    grupo_a_eliminar: developers
+
+  tasks:
+    - name: Eliminar el grupo "{{ grupo_a_eliminar }}"
+      ansible.builtin.group:
+        name: "{{ grupo_a_eliminar }}"
+        state: absent
