@@ -1,0 +1,22 @@
+---
+- name: Crear un usuario en Linux Similar a useradd
+  hosts: servidores_linux
+  become: yes  # Eleva privilegios para tareas administrativas
+  vars:
+    nuevo_usuario: juan
+    grupo_primario: users
+    shell_usuario: /bin/bash
+
+  tasks:
+    - name: Crear el usuario "{{ nuevo_usuario }}"
+      ansible.builtin.user:
+        name: "{{ nuevo_usuario }}"
+        group: "{{ grupo_primario }}"
+        shell: "{{ shell_usuario }}"
+        create_home: yes
+        state: present
+
+    - name: Establecer contraseña para el usuario "{{ nuevo_usuario }}"
+      ansible.builtin.user:
+        name: "{{ nuevo_usuario }}"
+        password: "{{ 'MiClave123' | password_hash('sha512') }}"
