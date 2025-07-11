@@ -1,0 +1,12 @@
+---
+- name: Crear un grupo en Linux similar a groupadd
+  hosts: servidores_linux
+  become: yes
+  vars:
+    nombre_grupo: developers
+
+  tasks:
+    - name: Crear el grupo "{{ nombre_grupo }}"
+      ansible.builtin.group:
+        name: "{{ nombre_grupo }}"
+        state: present
