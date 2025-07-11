@@ -1,0 +1,14 @@
+---
+- name: Cambiar el GID del grupo en Linux similar a usar groupmod
+  hosts: servidores_linux
+  become: yes
+  vars:
+    nombre_grupo: developers
+    nuevo_gid: 500000
+
+  tasks:
+    - name: Cambiar el GID del grupo "{{ nombre_grupo }}" a "{{ nuevo_gid }}"
+      ansible.builtin.group:
+        name: "{{ nombre_grupo }}"
+        gid: "{{ nuevo_gid }}"
+        state: present
