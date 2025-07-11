@@ -1,0 +1,13 @@
+---
+- name: Eliminar un usuario en Linux similar a userdel
+  hosts: servidores_linux
+  become: yes
+  vars:
+    usuario_a_eliminar: juan
+
+  tasks:
+    - name: Eliminar el usuario "{{ usuario_a_eliminar }}" y su directorio home
+      ansible.builtin.user:
+        name: "{{ usuario_a_eliminar }}"
+        state: absent
+        remove: yes
