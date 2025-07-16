@@ -1,0 +1,22 @@
+---
+- name: Matar proceso que más usa CPU
+  hosts: all
+  become: yes
+  gather_facts: false
+
+  tasks:
+
+    - name: Obtener PID del proceso con mayor uso de CPU
+      shell: |
+        ps -eo pid,pcpu --sort=-pcpu | awk 'NR==2 {print $1}'
+      register: highest_cpu_pid
+      changed_when: false
+
+    - name: Mostrar PID del proceso con mayor uso de CPU
+      debug:
+        msg: "PID con mayor uso de CPU: {{ highest_cpu_pid.stdout }}"
+
+    - name: Terminar proceso con mayor uso de CPU
+      ansible.builtin.shell: |
+        kill -9 {{ highest_cpu_pid.stdout }}
+      when: highest_cpu_pid.stdout is match("^[0-9]+$")
