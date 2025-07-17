@@ -13,7 +13,7 @@
   tasks:
     - name: Crear un ticket en Redmine
       uri:
-        url: "{{ redmine_url }}//issues.json"
+        url: "{{ redmine_url }}/issues.json"
         method: POST
         validate_certs: no 
         headers:
@@ -23,9 +23,9 @@
         body: |
           {
             "issue": {
-              "project_id": "{{ project_id }}"
-              "subject": "{{ issue_subject }}"
-              "description": "{{ issue_description }}"
+              "project_id": "{{ project_id }}",
+              "subject": "{{ issue_subject }}",
+              "description": "{{ issue_description }}",
               "priority_id": "{{ priority_id }}"
               }
            }   
