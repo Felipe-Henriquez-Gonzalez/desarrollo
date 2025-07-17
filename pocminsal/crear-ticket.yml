@@ -5,10 +5,9 @@
   vars:
     redmine_url: "http://redmine.apps.ocp4.minsal.devqa"  # <-- cambia por tu URL
     api_key: "{{ API_KEY }}"                         # <-- reemplaza con tu API Key
-    project_id: "ansible"                            # <-- ID o identificador del proyecto
+    project_id: "Ansible"                            # <-- ID o identificador del proyecto
     issue_subject: "ticket de prueba de ansible"
-    issue_description: " este es un contenido de prueba de ansible"
-    tracker_id: "{{ tracker }}"                                 # 1 = Bug, 2 = Feature, etc.
+    issue_description: "este es un contenido de prueba de ansible"
     priority_id: "{{ prioridad }}"                               # 1 = Low, 4 = Normal, etc.
 
   tasks:
@@ -27,7 +26,6 @@
               "project_id": "{{ project_id }}"
               "subject": "{{ issue_subject }}"
               "description": "{{ issue_description }}"
-              "tracker_id": "{{ tracker_id }}"
               "priority_id": "{{ priority_id }}"
               }
            }   
