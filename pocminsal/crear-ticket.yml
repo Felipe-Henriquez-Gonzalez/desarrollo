@@ -16,19 +16,23 @@
       uri:
         url: "{{ redmine_url }}//issues.json"
         method: POST
+        validate_certs: no 
         headers:
           Content-Type: "application/json"
           X-Redmine-API-Key: "{{ api_key }}"
         body_format: json
-        body:
-          issue:
-            project_id: "{{ project_id }}"
-            subject: "{{ issue_subject }}"
-            description: "{{ issue_description }}"
-            tracker_id: "{{ tracker_id }}"
-            priority_id: "{{ priority_id }}"
+        body: |
+          {
+            "issue": {
+              "project_id": "{{ project_id }}"
+              "subject": "{{ issue_subject }}"
+              "description": "{{ issue_description }}"
+              "tracker_id": "{{ tracker_id }}"
+              "priority_id": "{{ priority_id }}"
+              }
+           }   
         status_code: 201
-        validate_certs: no  # 👈 esta línea desactiva la verificación del certificado SSL
+       # validate_certs: no  # 👈 esta línea desactiva la verificación del certificado SSL
         return_content: yes
       register: redmine_response
 
