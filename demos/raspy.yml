@@ -8,12 +8,13 @@
       debug:
         var: ansible_facts
 
-    - name: Obtener device ID desde /boot/config/*key.pem
-      find:
-        paths: /boot/config/
-        patterns: "*.key.pem"
-      register: var_device_id
-      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+#    - name: Obtener device ID desde /boot/config/*key.pem
+#      find:
+#        paths: /boot/config/
+#        patterns: "*.key.pem"
+#      register: var_device_id
+#      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
 
     - name: Set device_id fact
       set_fact:
