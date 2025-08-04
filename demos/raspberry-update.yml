@@ -1,0 +1,23 @@
+---
+- name: Actualizar Raspberry Pi
+  hosts: raspberry
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Actualizar la caché de paquetes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Actualizar todos los paquetes instalados
+      apt:
+        upgrade: dist
+        autoremove: yes
+
+    - name: Reiniciar si es necesario
+      reboot:
+        msg: "Reiniciando Raspberry Pi después de la actualización"
+        connect_timeout: 5
+        reboot_timeout: 300
+      when: ansible_facts.packages['raspberrypi-bootloader'] is defined
