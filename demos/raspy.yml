@@ -1,0 +1,92 @@
+---
+- name: PoC EESS
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Debug gather_facts
+      debug:
+        var: ansible_facts
+
+    - name: Obtener device ID desde /boot/config/*key.pem
+      find:
+        paths: /boot/config/
+        patterns: "*.key.pem"
+      register: var_device_id
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Set device_id fact
+      set_fact:
+        device_id: "{{ (var_device_id.files.0.path.split('/')[3]).split('.')[0] }}"
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Debug device_id
+      debug:
+        var: device_id
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Backup de /boot/config/*full-chain.cert.pem
+      ansible.builtin.fetch:
+        src: "/boot/config/{{ device_id }}-full-chain.cert.pem"
+        dest: "/mnt/eess/backup/{{ device_id }}-full-chain.cert.pem.{{ ansible_date_time.iso8601_basic_short }}"
+        flat: true
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Backup de /boot/config/*.key.pem
+      ansible.builtin.copy:
+        src: "/boot/config/{{ device_id }}.key.pem"
+        dest: "/root/{{ device_id }}.key.pem.{{ ansible_date_time.iso8601_basic_short }}"
+        remote_src: true
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+
+    - name: Borrar certificados de /boot/config/
+      ansible.builtin.file:
+        path: "/boot/config/{{ device_id }}{{ item }}"
+        state: absent
+      loop:
+        - ".key.pem"
+        - "-full-chain.cert.pem"
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Copiar certificados desde "/mnt/eess/certs/ a /boot/config/"
+      ansible.builtin.copy:
+        src: "/mnt/eess/certs/{{ device_id }}-full-chain.cert.pem"
+        dest: "/boot/config/{{ device_id }}-full-chain.cert.pem"
+        owner: root
+        group: root
+        mode: '0755'
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Copiar key  a /boot/config/"
+      ansible.builtin.copy:
+        src: "/root/{{ device_id }}.key.pem"
+        dest: "/boot/config/{{ device_id }}.key.pem"
+        owner: root
+        group: root
+        mode: '0755'
+        remote_src: true
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Create /boot/config/init-iot-edge
+      ansible.builtin.file:
+        path: /boot/config/init-iot-edge
+        state: touch
+        owner: root
+        group: root
+        mode: '0755'
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
+
+    - name: Reboot
+      ansible.builtin.reboot:
+        msg: "Rebooting to apply new certificates"
+        connect_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+
+    - name: Wait for the system to come back online
+      ansible.builtin.wait_for_connection:
+        delay: 10
+        timeout: 300
+      when: ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version == "11"
