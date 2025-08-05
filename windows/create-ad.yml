@@ -1,0 +1,39 @@
+---
+- name: Crear un controlador de dominio en Windows Server 2022
+  hosts: windows
+  gather_facts: yes
+
+  vars:
+    domain_name: "redhat.demo.local"
+    safe_mode_password: "{{ _password }}"  # Debe cumplir requisitos de complejidad
+
+  tasks:
+
+    - name: Cambiar nombre del equipo
+      ansible.windows.win_hostname:
+        name: DC01
+      register: rename_result
+
+    - name: Reiniciar si se cambió el nombre
+      ansible.windows.win_reboot:
+      when: rename_result.reboot_required
+
+    - name: Instalar el rol de Active Directory Domain Services
+      ansible.windows.win_feature:
+        name: AD-Domain-Services
+        include_management_tools: true
+        state: present
+
+    - name: Promover como nuevo bosque de AD
+      ansible.windows.win_shell: |
+        Install-ADDSForest `
+          -DomainName "{{ domain_name }}" `
+          -SafeModeAdministratorPassword (ConvertTo-SecureString "{{ safe_mode_password }}" -AsPlainText -Force) `
+          -InstallDNS `
+          -Force
+      register: promote_result
+      ignore_errors: yes  # Evita fallos por reinicio automático
+
+    - name: Reiniciar después de promoción
+      ansible.windows.win_reboot:
+        reboot_timeout: 600
