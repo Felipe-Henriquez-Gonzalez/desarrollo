@@ -16,5 +16,5 @@
         scope: "{{ ambito_grupo }}"
         category: "{{ tipo_grupo }}"
         description: "{{ descripcion_grupo }}"
-        path: OU=groups,DC=redhat,DC=demo,DC=local
+        #        path: OU=groups,DC=redhat,DC=demo,DC=local
         state: present
