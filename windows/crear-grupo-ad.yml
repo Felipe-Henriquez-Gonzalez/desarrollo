@@ -1,0 +1,20 @@
+---
+- name: Crear grupo en Active Directory
+  hosts: windows
+  gather_facts: no
+
+  vars:
+    nombre_grupo: "GRP_Ventas"
+    descripcion_grupo: "Grupo de usuarios del área de ventas"
+    tipo_grupo: "security"     # Puede ser 'security' o 'distribution'
+    ambito_grupo: "global"     # Puede ser 'domainlocal', 'global' o 'universal'
+
+  tasks:
+    - name: Crear grupo en Active Directory
+      microsoft.ad.group:
+        name: "{{ nombre_grupo }}"
+        scope: "{{ ambito_grupo }}"
+        category: "{{ tipo_grupo }}"
+        description: "{{ descripcion_grupo }}"
+        path: OU=groups,DC=redhat,DC=demo,DC=local
+        state: present
