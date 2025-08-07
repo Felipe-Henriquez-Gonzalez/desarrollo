@@ -3,6 +3,7 @@
   hosts: rhel_machines
   become: yes
   gather_facts: yes
+  ignore_errors: yes
 
   vars:
     resultado_controles: []
