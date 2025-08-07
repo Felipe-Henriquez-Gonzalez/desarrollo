@@ -1,0 +1,63 @@
+---
+- name: Control C.I.S. básico en RHEL
+  hosts: rhel_machines
+  become: yes
+  gather_facts: yes
+
+  vars:
+    resultado_controles: []
+
+  tasks:
+
+    - name: Control 1 - Verificar que root tiene contraseña
+      command: "grep '^root:' /etc/shadow"
+      register: root_shadow
+      changed_when: false
+
+    - name: Evaluar control 1
+      set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': 'Root con contraseña', 'estado': 'CUMPLE' if root_shadow.stdout.split(':')[1] != '' else 'NO CUMPLE' } ] }}"
+
+    - name: Control 2 - Verificar que firewalld está activo
+      service_facts:
+
+    - name: Evaluar control 2
+      set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': 'firewalld activo', 'estado': 'CUMPLE' if ansible_facts.services['firewalld.service'].state == 'running' else 'NO CUMPLE' } ] }}"
+
+    - name: Control 3 - SELinux en modo enforcing
+      command: getenforce
+      register: selinux_status
+      changed_when: false
+
+    - name: Evaluar control 3
+      set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': 'SELinux enforcing', 'estado': 'CUMPLE' if selinux_status.stdout == 'Enforcing' else 'NO CUMPLE' } ] }}"
+
+    - name: Control 4 - Permisos correctos en /etc/passwd
+      stat:
+        path: /etc/passwd
+      register: passwd_stat
+
+    - name: Evaluar control 4
+      set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': 'Permisos /etc/passwd 644', 'estado': 'CUMPLE' if passwd_stat.stat.mode == '0644' else 'NO CUMPLE' } ] }}"
+
+    - name: Control 5 - SSH no permite login root (opcional)
+      command: grep -Ei '^PermitRootLogin\s+no' /etc/ssh/sshd_config
+      register: sshd_root_login
+      failed_when: false
+      changed_when: false
+
+    - name: Evaluar control 5
+      set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': 'SSH sin login root', 'estado': 'CUMPLE' if sshd_root_login.rc == 0 else 'NO CUMPLE' } ] }}"
+
+    - name: Mostrar resultados de controles C.I.S.
+      debug:
+        msg: |
+          Resultados del control de cumplimiento:
+          {% for item in resultado_controles %}
+            - {{ item.control }}: {{ item.estado }}
+          {% endfor %}
+
