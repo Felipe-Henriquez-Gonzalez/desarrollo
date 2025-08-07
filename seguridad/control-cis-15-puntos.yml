@@ -1,0 +1,160 @@
+---
+- name: Controles CIS básicos para RHEL
+  hosts: rhel_machines
+  become: yes
+  gather_facts: yes
+
+  vars:
+    resultado_controles: []
+
+  tasks:
+
+    # 1. Contraseña root no vacía
+    - name: Verificar contraseña de root
+      command: grep '^root:' /etc/shadow
+      register: root_shadow
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '1. Root con contraseña', 'estado': 'CUMPLE' if root_shadow.stdout.split(':')[1] != '' else 'NO CUMPLE' } ] }}"
+
+    # 2. Contraseñas seguras (PASS_MIN_LEN >= 14)
+    - name: Verificar longitud mínima de contraseña
+      command: grep -E '^PASS_MIN_LEN\s+([0-9]+)' /etc/login.defs
+      register: pass_min_len
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '2. PASS_MIN_LEN >= 14', 'estado': 'CUMPLE' if (pass_min_len.stdout | regex_search('[0-9]+') | int) >= 14 else 'NO CUMPLE' } ] }}"
+
+    # 3. Firewalld activo
+    - name: Verificar firewalld activo
+      service_facts:
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '3. Firewalld activo', 'estado': 'CUMPLE' if ansible_facts.services['firewalld.service'].state == 'running' else 'NO CUMPLE' } ] }}"
+
+    # 4. SELinux enforcing
+    - name: Verificar SELinux en modo enforcing
+      command: getenforce
+      register: selinux_status
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '4. SELinux enforcing', 'estado': 'CUMPLE' if selinux_status.stdout == 'Enforcing' else 'NO CUMPLE' } ] }}"
+
+    # 5. SSH: no permitir root login
+    - name: Verificar SSH PermitRootLogin no
+      command: grep -Ei '^PermitRootLogin\s+no' /etc/ssh/sshd_config
+      register: sshd_root_login
+      failed_when: false
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '5. SSH sin root login', 'estado': 'CUMPLE' if sshd_root_login.rc == 0 else 'NO CUMPLE' } ] }}"
+
+    # 6. SSH: protocolo 2
+    - name: Verificar SSH protocolo 2
+      command: grep -Ei '^Protocol\s+2' /etc/ssh/sshd_config
+      register: sshd_proto
+      failed_when: false
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '6. SSH protocolo 2', 'estado': 'CUMPLE' if sshd_proto.rc == 0 else 'NO CUMPLE' } ] }}"
+
+    # 7. SSH: timeout sesión
+    - name: Verificar ClientAliveInterval
+      command: grep -Ei '^ClientAliveInterval\s+[1-9]' /etc/ssh/sshd_config
+      register: ssh_timeout
+      failed_when: false
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '7. SSH timeout habilitado', 'estado': 'CUMPLE' if ssh_timeout.rc == 0 else 'NO CUMPLE' } ] }}"
+
+    # 8. SSH: login banners
+    - name: Verificar banner SSH habilitado
+      command: grep -Ei '^Banner\s+/etc/issue.net' /etc/ssh/sshd_config
+      register: ssh_banner
+      failed_when: false
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '8. Banner SSH configurado', 'estado': 'CUMPLE' if ssh_banner.rc == 0 else 'NO CUMPLE' } ] }}"
+
+    # 9. /etc/passwd permisos 644
+    - name: Verificar permisos /etc/passwd
+      stat:
+        path: /etc/passwd
+      register: passwd_stat
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '9. Permisos /etc/passwd', 'estado': 'CUMPLE' if passwd_stat.stat.mode == '0644' else 'NO CUMPLE' } ] }}"
+
+    # 10. /etc/shadow permisos 0000
+    - name: Verificar permisos /etc/shadow
+      stat:
+        path: /etc/shadow
+      register: shadow_stat
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '10. Permisos /etc/shadow', 'estado': 'CUMPLE' if shadow_stat.stat.mode == '0000' else 'NO CUMPLE' } ] }}"
+
+    # 11. /etc/group permisos 644
+    - name: Verificar permisos /etc/group
+      stat:
+        path: /etc/group
+      register: group_stat
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '11. Permisos /etc/group', 'estado': 'CUMPLE' if group_stat.stat.mode == '0644' else 'NO CUMPLE' } ] }}"
+
+    # 12. Permisos crontab root
+    - name: Verificar permisos crontab de root
+      stat:
+        path: /var/spool/cron/root
+      register: cron_stat
+      failed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '12. Permisos crontab root 600', 'estado': 'CUMPLE' if cron_stat.stat.mode == '0600' else 'NO CUMPLE' } ] }}"
+
+    # 13. Bloquear usb-storage (módulo)
+    - name: Verificar que usb-storage está bloqueado
+      command: "modprobe -n -v usb-storage"
+      register: usb_mod
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '13. usb-storage bloqueado', 'estado': 'CUMPLE' if 'install /bin/true' in usb_mod.stdout else 'NO CUMPLE' } ] }}"
+
+    # 14. Auditing habilitado
+    - name: Verificar auditing habilitado
+      service:
+        name: auditd
+        state: started
+      register: auditd_status
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '14. auditd activo', 'estado': 'CUMPLE' if auditd_status.state == 'started' else 'NO CUMPLE' } ] }}"
+
+    # 15. Servicio telnet no instalado o deshabilitado
+    - name: Verificar telnet no instalado
+      shell: "rpm -q telnet"
+      register: telnet_check
+      failed_when: false
+      changed_when: false
+
+    - set_fact:
+        resultado_controles: "{{ resultado_controles + [ {'control': '15. Telnet no instalado', 'estado': 'CUMPLE' if 'not installed' in telnet_check.stdout else 'NO CUMPLE' } ] }}"
+
+    # RESULTADO FINAL
+    - name: Mostrar resultados del control CIS
+      debug:
+        msg: |
+          RESULTADOS DE CUMPLIMIENTO CIS:
+          {% for item in resultado_controles %}
+            - {{ item.control }}: {{ item.estado }}
+          {% endfor %}
