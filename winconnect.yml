@@ -15,7 +15,7 @@
 
     - name: List out cert authorities
       ansible.windows.win_command:
-        cmd: certutil -ping z0cert04.grupobisa.net
+        cmd: certutil -ping demo.cert.net
       failed_when: false
 
     - name: Make sure the response files don't exist, will turn up an error if they're there
@@ -53,16 +53,4 @@
 
 
 
-  #  - name: Generate Self-Signed Certificate
-  #    win_shell: |
-  #      $cert = New-SelfSignedCertificate -DnsName "x0axon01" -CertStoreLocation "Cert:\LocalMachine\My"
-  #      $certThumbprint = $cert.Thumbprint
-  #      $certThumbprint
-  #    register: cert_result
-
-#
-  #  - name: Submit Certificate Request
-  #    win_shell: |
-  #      $certThumbprint = "{{ cert_result.stdout }}"
-  #      Submit-CertificateRequest -Thumbprint $certThumbprint -CertStoreLocation "Cert:\LocalMachine\My"
-  #    when: cert_result.stdout is defined
+  
