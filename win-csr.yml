@@ -14,12 +14,12 @@
       
     - name: create keystore
       ansible.windows.win_command:
-        cmd: keytool -genkey -alias server -validity 365 -keyalg RSA -keystore c:/a.p12 -dname "CN={{win_host}}, OU=Banco , O=Banco Bisa, L=La PAZ, ST=BO,C=BO" -storepass bisabisa
+        cmd: keytool -genkey -alias server -validity 365 -keyalg RSA -keystore c:/a.p12 -dname "CN={{win_host}}, OU=demo, O=demo, L=local ST=BO,C=BO" 
       failed_when: false
 
     - name: create csr
       ansible.windows.win_command:
-        cmd: keytool -certreq -alias server   -keystore c:/a.p12 -file c:/cert.csr -storepass bisabisa
+        cmd: keytool -certreq -alias server   -keystore c:/a.p12 -file c:/cert.csr -
       failed_when: false
    
     - name: list C disk
