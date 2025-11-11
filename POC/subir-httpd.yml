@@ -1,0 +1,10 @@
+
+---
+- name: Subir servicio httpd
+  hosts: all
+  become: true
+  tasks:
+    - name: Iniciar servicio httpd
+      ansible.builtin.service:
+        name: httpd
+        state: started
