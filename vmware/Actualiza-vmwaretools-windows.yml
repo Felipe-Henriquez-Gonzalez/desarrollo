@@ -1,0 +1,76 @@
+---
+- name: Actualizar VMware Tools en VMs Windows (vCenter)
+  hosts: localhost
+  gather_facts: false
+  collections:
+    - community.vmware
+
+  vars:
+    vcenter_hostname: "{{ lookup('env','VMWARE_HOST') | default('vcenter.ejemplo.local', true) }}"
+    vcenter_username: "{{ lookup('env','VMWARE_USER') | default('administrator@vsphere.local', true) }}"
+    vcenter_password: "{{ lookup('env','VMWARE_PASSWORD') | default(omit, true) }}"
+    validate_certs: false
+    datacenter: "DC1"
+    folder: "/{{ datacenter }}/vm"
+
+    # Lista de VMs Windows por nombre
+    vm_names_windows:
+      - win-app01
+      - win-db02
+
+    # Parámetros silenciosos típicos del instalador en Windows (opcional)
+    windows_installer_options: "/S /v /qn REBOOT=R"
+
+  tasks:
+    - name: Asegurar que la VM está encendida
+      community.vmware.vmware_guest_powerstate:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter }}"
+        folder: "{{ folder }}"
+        name: "{{ item }}"
+        state: powered-on
+      loop: "{{ vm_names_windows }}"
+      delegate_to: localhost
+
+    - name: Ejecutar upgrade de VMware Tools en Windows
+      community.vmware.vmware_guest_tools_upgrade:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter }}"
+        folder: "{{ folder }}"
+        name: "{{ item }}"
+        installer_options: "{{ windows_installer_options }}"
+      loop: "{{ vm_names_windows }}"
+      delegate_to: localhost
+      register: win_tools_upgrade
+
+    - name: Esperar a que VMware Tools quede en estado Current/Supported (Windows)
+      vars:
+        vm_name: "{{ item.item }}"
+      community.vmware.vmware_guest_tools_info:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: "{{ validate_certs }}"
+        datacenter: "{{ datacenter }}"
+        folder: "{{ folder }}"
+        name: "{{ vm_name }}"
+      register: win_tools_info
+      until: win_tools_info.vmtools_info.vm_tools_version_status is defined and
+             win_tools_info.vmtools_info.vm_tools_version_status in ['guestToolsCurrent','guestToolsSupported']
+      retries: 12
+      delay: 10
+      loop: "{{ win_tools_upgrade.results }}"
+      delegate_to: localhost
+
+    - name: Resumen Windows
+      debug:
+        msg:
+          vm: "{{ item.item }}"
+          tools_status: "{{ (item.vmtools_info.vm_tools_version_status | default('unknown')) }}"
+      loop: "{{ win_tools_info.results }}"
