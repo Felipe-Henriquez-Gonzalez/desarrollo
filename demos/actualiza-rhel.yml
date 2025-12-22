@@ -1,6 +1,6 @@
 ---
 - name: Actualiza rhel a la ultima version
-  hosts: all
+  hosts: "{{ _hosts }}"
   gather_facts: false
   become: true
 
