@@ -11,7 +11,7 @@ win01
 win02
 win03
 [vars:windows]
-ansible_connection_port: 496
+ansible_connection_port:496
 
 [vars:all]
-ansible_dns: 8.8.8.8
+ansible_dns:8.8.8.8
