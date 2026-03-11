@@ -1,5 +1,5 @@
 [servidores-web]
-maquina01 ansible_host:192.168.30.199
+maquina01
 maquina02
 maquina03
 [databases]
@@ -10,8 +10,3 @@ db03
 win01
 win02
 win03
-[vars:windows]
-ansible_connection_port:496
-
-[vars:all]
-ansible_dns:8.8.8.8
