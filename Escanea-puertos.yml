@@ -1,0 +1,24 @@
+---
+- name: Escanear puerto remoto desde el controlador
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    target_host: "{{ host }}"
+    target_port: "{{ port | int }}"
+
+  tasks:
+    - name: Verificar si el puerto está abierto
+      ansible.builtin.wait_for:
+        host: "{{ target_host }}"
+        port: "{{ target_port }}"
+        timeout: 3
+        state: started
+      register: port_check
+      ignore_errors: true
+
+    - name: Mostrar resultado
+      ansible.builtin.debug:
+        msg: >-
+          Host {{ target_host }} Puerto {{ target_port }}:
+          {{ 'ABIERTO' if port_check is succeeded else 'CERRADO o FILTRADO' }}
