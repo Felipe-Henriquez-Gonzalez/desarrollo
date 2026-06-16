@@ -1,0 +1,47 @@
+---
+- name: Crear Entidad Certificadora en Windows Server
+  hosts: "{{ _host }}"
+  gather_facts: false
+
+  vars:
+    ca_name: "LAB-ROOT-CA"
+    ca_type: "StandaloneRootCA"   # EnterpriseRootCA o StandaloneRootCA
+    key_length: 4096
+    hash_algorithm: "SHA256"
+    crypto_provider: "RSA#Microsoft Software Key Storage Provider"
+
+  tasks:
+    - name: Instalar rol AD CS Certification Authority
+      ansible.windows.win_feature:
+        name: ADCS-Cert-Authority
+        state: present
+        include_management_tools: true
+      register: adcs_role
+
+    - name: Reiniciar si la instalación del rol lo requiere
+      ansible.windows.win_reboot:
+      when: adcs_role.reboot_required | default(false)
+
+    - name: Verificar si la CA ya está configurada
+      ansible.windows.win_shell: |
+        Get-Service CertSvc -ErrorAction SilentlyContinue
+      register: certsvc_check
+      failed_when: false
+      changed_when: false
+
+    - name: Configurar la Entidad Certificadora
+      ansible.windows.win_shell: |
+        Install-AdcsCertificationAuthority `
+          -CAType {{ ca_type }} `
+          -CACommonName "{{ ca_name }}" `
+          -CryptoProviderName "{{ crypto_provider }}" `
+          -KeyLength {{ key_length }} `
+          -HashAlgorithmName {{ hash_algorithm }} `
+          -Force
+      when: certsvc_check.rc != 0
+
+    - name: Asegurar que el servicio de certificados esté iniciado
+      ansible.windows.win_service:
+        name: CertSvc
+        state: started
+        start_mode: auto
