@@ -1,36 +1,75 @@
----
-- name: Deploy Apache Demo desde GitHub
-  hosts: "{{ target_host }}"
-  become: true
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Red Hat Ansible Automation Platform Demo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #151515;
+      color: white;
+      text-align: center;
+    }
 
-  vars:
-    application_name: "AAP Apache Demo"
-    environment: "LAB"
+    header {
+      background: #ee0000;
+      padding: 30px;
+    }
 
-  tasks:
+    .logo {
+      font-size: 34px;
+      font-weight: bold;
+    }
 
-    - name: Instalar paquetes requeridos
-      ansible.builtin.dnf:
-        name:
-          - httpd
-          - git
-        state: present
+    .container {
+      padding: 60px 20px;
+    }
 
-    - name: Iniciar y habilitar Apache
-      ansible.builtin.service:
-        name: httpd
-        state: started
-        enabled: true
+    .card {
+      background: #222;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
 
-    - name: Generar página desde template Jinja2
-      ansible.builtin.template:
-        src: templates/index.html.j2
-        dest: /var/www/html/index.html
-        owner: apache
-        group: apache
-        mode: "0644"
+    .ansible {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
 
-    - name: Reiniciar Apache
-      ansible.builtin.service:
-        name: httpd
-        state: restarted
+    footer {
+      margin-top: 50px;
+      color: #aaa;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Red Hat Ansible Automation Platform</div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="ansible">Ⓐ</div>
+      <h1>Demo publicada con Ansible</h1>
+      <p>
+        Esta página fue desplegada automáticamente sobre Apache HTTP Server
+        usando un Playbook de Ansible.
+      </p>
+      <p>
+        Host destino configurable mediante variable.
+      </p>
+    </div>
+
+    <footer>
+      Powered by Red Hat Ansible Automation Platform
+    </footer>
+  </div>
+
+</body>
+</html>
