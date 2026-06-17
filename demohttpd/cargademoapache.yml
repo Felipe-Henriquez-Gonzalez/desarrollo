@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    git_repo_url: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
+#    git_repo_url: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
     apache_document_root: "/var/www/html"
 
   tasks:
@@ -36,7 +36,7 @@
 
     - name: Clonar página desde Git en la ruta default de Apache
       ansible.builtin.git:
-        repo: "{{ git_repo_url }}"
+        repo: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
         dest: "{{ apache_document_root }}"
         version: main
         force: true
