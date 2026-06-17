@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    git_repo_url: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
+    git_repo_url: "git@github.com:Felipe-Henriquez-Gonzalez/demoapache.git"
     apache_document_root: "/var/www/html"
 
   tasks:
