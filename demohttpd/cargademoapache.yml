@@ -4,9 +4,6 @@
   become: true
 
   vars:
-    git_repo_url: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
-    git_checkout_dir: "/tmp/demoapache"
-
     application_name: "AAP Apache Demo"
     environment: "LAB"
 
@@ -25,17 +22,9 @@
         state: started
         enabled: true
 
-    - name: Clonar o actualizar repositorio demoapache
-      ansible.builtin.git:
-        repo: "{{ git_repo_url }}"
-        dest: "{{ git_checkout_dir }}"
-        version: main
-        force: true
-        update: true
-
     - name: Generar página desde template Jinja2
       ansible.builtin.template:
-        src: "{{ git_checkout_dir }}/templates/index.html.j2"
+        src: templates/index.html.j2
         dest: /var/www/html/index.html
         owner: apache
         group: apache
