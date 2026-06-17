@@ -1,0 +1,36 @@
+---
+- name: Deploy Apache Demo desde GitHub
+  hosts: "{{ target_host }}"
+  become: true
+
+  vars:
+    application_name: "AAP Apache Demo"
+    environment: "LAB"
+
+  tasks:
+
+    - name: Instalar paquetes requeridos
+      ansible.builtin.dnf:
+        name:
+          - httpd
+          - git
+        state: present
+
+    - name: Iniciar y habilitar Apache
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Generar página desde template Jinja2
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+        owner: apache
+        group: apache
+        mode: "0644"
+
+    - name: Reiniciar Apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
