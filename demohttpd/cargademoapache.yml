@@ -1,54 +1,45 @@
 ---
-- name: Publicar página demo en Apache desde Git
+- name: Deploy Apache Demo desde GitHub
   hosts: "{{ target_host }}"
   become: true
 
   vars:
-#    git_repo_url: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
-    apache_document_root: "/var/www/html"
+    git_repo_url: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
+    git_checkout_dir: "/tmp/demoapache"
+
+    application_name: "AAP Apache Demo"
+    environment: "LAB"
 
   tasks:
-    - name: Instalar Apache y Git en RHEL
+
+    - name: Instalar paquetes requeridos
       ansible.builtin.dnf:
         name:
           - httpd
           - git
         state: present
 
-    - name: Habilitar e iniciar Apache
+    - name: Iniciar y habilitar Apache
       ansible.builtin.service:
         name: httpd
         state: started
         enabled: true
 
-    - name: Limpiar contenido anterior del DocumentRoot
-      ansible.builtin.file:
-        path: "{{ apache_document_root }}"
-        state: absent
-
-    - name: Crear DocumentRoot
-      ansible.builtin.file:
-        path: "{{ apache_document_root }}"
-        state: directory
-        owner: apache
-        group: apache
-        mode: "0755"
-
-    - name: Clonar página desde Git en la ruta default de Apache
+    - name: Clonar o actualizar repositorio demoapache
       ansible.builtin.git:
-        repo: "https://github.com/Felipe-Henriquez-Gonzalez/demoapache.git"
-        dest: "{{ apache_document_root }}"
+        repo: "{{ git_repo_url }}"
+        dest: "{{ git_checkout_dir }}"
         version: main
         force: true
         update: true
 
-    - name: Ajustar permisos del sitio
-      ansible.builtin.file:
-        path: "{{ apache_document_root }}"
+    - name: Generar página desde template Jinja2
+      ansible.builtin.template:
+        src: "{{ git_checkout_dir }}/templates/index.html.j2"
+        dest: /var/www/html/index.html
         owner: apache
         group: apache
-        recurse: true
-
+        mode: "0644"
 
     - name: Reiniciar Apache
       ansible.builtin.service:
