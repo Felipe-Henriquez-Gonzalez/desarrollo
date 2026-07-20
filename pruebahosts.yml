@@ -1,0 +1,26 @@
+---
+- name: Verificar conectividad con los hosts
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Intentar conexión con cada host
+      ansible.builtin.ping:
+      register: resultado_ping
+      ignore_unreachable: true
+      ignore_errors: true
+
+    - name: Mostrar hosts accesibles
+      ansible.builtin.debug:
+        msg: "El host {{ inventory_hostname }} está accesible."
+      when:
+        - resultado_ping is defined
+        - resultado_ping.ping | default('') == 'pong'
+
+    - name: Mostrar hosts no accesibles
+      ansible.builtin.debug:
+        msg: "No fue posible conectarse al host {{ inventory_hostname }}. Se continúa con los demás."
+      when:
+        - resultado_ping is not defined or
+          resultado_ping.unreachable | default(false) or
+          resultado_ping.failed | default(false)
