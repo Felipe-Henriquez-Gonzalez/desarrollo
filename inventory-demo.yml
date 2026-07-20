@@ -1,0 +1,277 @@
+all:
+  hosts:
+    # Segmento 192.168.2.0/24 (10 hosts)
+    server3365.byma.com.ar:
+      ansible_host: 192.168.2.10
+    server6765.byma.com.ar:
+      ansible_host: 192.168.2.11
+    server6635.byma.com.ar:
+      ansible_host: 192.168.2.12
+    server5994.byma.com.ar:
+      ansible_host: 192.168.2.13
+    server5843.byma.com.ar:
+      ansible_host: 192.168.2.14
+    server7476.byma.com.ar:
+      ansible_host: 192.168.2.15
+    server6187.byma.com.ar:
+      ansible_host: 192.168.2.16
+    server2381.byma.com.ar:
+      ansible_host: 192.168.2.17
+    server8763.byma.com.ar:
+      ansible_host: 192.168.2.18
+    server4444.byma.com.ar:
+      ansible_host: 192.168.2.19
+
+    # Segmento 192.168.64.0/20 (5 hosts)
+    server2548.byma.com.ar:
+      ansible_host: 192.168.64.10
+    server3492.byma.com.ar:
+      ansible_host: 192.168.64.11
+    server2190.byma.com.ar:
+      ansible_host: 192.168.64.12
+    server6445.byma.com.ar:
+      ansible_host: 192.168.64.13
+    server5825.byma.com.ar:
+      ansible_host: 192.168.64.14
+
+    # Segmento 192.168.1.0/24 (10 hosts)
+    server1071.byma.com.ar:
+      ansible_host: 192.168.1.10
+    server7109.byma.com.ar:
+      ansible_host: 192.168.1.11
+    server5172.byma.com.ar:
+      ansible_host: 192.168.1.12
+    server3231.byma.com.ar:
+      ansible_host: 192.168.1.13
+    server5465.byma.com.ar:
+      ansible_host: 192.168.1.14
+    server7274.byma.com.ar:
+      ansible_host: 192.168.1.15
+    server6766.byma.com.ar:
+      ansible_host: 192.168.1.16
+    server1262.byma.com.ar:
+      ansible_host: 192.168.1.17
+    server1783.byma.com.ar:
+      ansible_host: 192.168.1.18
+    server9567.byma.com.ar:
+      ansible_host: 192.168.1.19
+
+    # Segmento 192.168.14.0/24 (10 hosts)
+    server2944.byma.com.ar:
+      ansible_host: 192.168.14.10
+    server8052.byma.com.ar:
+      ansible_host: 192.168.14.11
+    server9004.byma.com.ar:
+      ansible_host: 192.168.14.12
+    server4643.byma.com.ar:
+      ansible_host: 192.168.14.13
+    server9172.byma.com.ar:
+      ansible_host: 192.168.14.14
+    server1301.byma.com.ar:
+      ansible_host: 192.168.14.15
+    server6988.byma.com.ar:
+      ansible_host: 192.168.14.16
+    server5412.byma.com.ar:
+      ansible_host: 192.168.14.17
+    server9565.byma.com.ar:
+      ansible_host: 192.168.14.18
+    server7019.byma.com.ar:
+      ansible_host: 192.168.14.19
+
+    # Segmento 192.168.19.0/24 (10 hosts)
+    server2369.byma.com.ar:
+      ansible_host: 192.168.19.10
+    server3398.byma.com.ar:
+      ansible_host: 192.168.19.11
+    server3603.byma.com.ar:
+      ansible_host: 192.168.19.12
+    server3463.byma.com.ar:
+      ansible_host: 192.168.19.13
+    server2731.byma.com.ar:
+      ansible_host: 192.168.19.14
+    server6963.byma.com.ar:
+      ansible_host: 192.168.19.15
+    server1408.byma.com.ar:
+      ansible_host: 192.168.19.16
+    server8585.byma.com.ar:
+      ansible_host: 192.168.19.17
+    server6949.byma.com.ar:
+      ansible_host: 192.168.19.18
+    server5088.byma.com.ar:
+      ansible_host: 192.168.19.19
+
+    # Segmento 192.168.127.0/24 (10 hosts)
+    server4249.byma.com.ar:
+      ansible_host: 192.168.127.10
+    server5949.byma.com.ar:
+      ansible_host: 192.168.127.11
+    server6881.byma.com.ar:
+      ansible_host: 192.168.127.12
+    server1781.byma.com.ar:
+      ansible_host: 192.168.127.13
+    server4761.byma.com.ar:
+      ansible_host: 192.168.127.14
+    server6576.byma.com.ar:
+      ansible_host: 192.168.127.15
+    server3803.byma.com.ar:
+      ansible_host: 192.168.127.16
+    server3280.byma.com.ar:
+      ansible_host: 192.168.127.17
+    server7349.byma.com.ar:
+      ansible_host: 192.168.127.18
+    server6855.byma.com.ar:
+      ansible_host: 192.168.127.19
+
+    # Segmento 192.168.128.0/24 (10 hosts)
+    server2119.byma.com.ar:
+      ansible_host: 192.168.128.10
+    server3023.byma.com.ar:
+      ansible_host: 192.168.128.11
+    server7907.byma.com.ar:
+      ansible_host: 192.168.128.12
+    server1506.byma.com.ar:
+      ansible_host: 192.168.128.13
+    server8888.byma.com.ar:
+      ansible_host: 192.168.128.14
+    server7791.byma.com.ar:
+      ansible_host: 192.168.128.15
+    server6270.byma.com.ar:
+      ansible_host: 192.168.128.16
+    server7372.byma.com.ar:
+      ansible_host: 192.168.128.17
+    server5534.byma.com.ar:
+      ansible_host: 192.168.128.18
+    server3905.byma.com.ar:
+      ansible_host: 192.168.128.19
+
+    # Segmento 192.168.129.0/24 (10 hosts)
+    server7150.byma.com.ar:
+      ansible_host: 192.168.129.10
+    server2870.byma.com.ar:
+      ansible_host: 192.168.129.11
+    server5899.byma.com.ar:
+      ansible_host: 192.168.129.12
+    server2022.byma.com.ar:
+      ansible_host: 192.168.129.13
+    server4840.byma.com.ar:
+      ansible_host: 192.168.129.14
+    server9753.byma.com.ar:
+      ansible_host: 192.168.129.15
+    server7183.byma.com.ar:
+      ansible_host: 192.168.129.16
+    server8840.byma.com.ar:
+      ansible_host: 192.168.129.17
+    server6043.byma.com.ar:
+      ansible_host: 192.168.129.18
+    server8786.byma.com.ar:
+      ansible_host: 192.168.129.19
+
+    # Segmento 192.168.130.0/24 (10 hosts)
+    server8569.byma.com.ar:
+      ansible_host: 192.168.130.10
+    server9904.byma.com.ar:
+      ansible_host: 192.168.130.11
+    server7651.byma.com.ar:
+      ansible_host: 192.168.130.12
+    server8439.byma.com.ar:
+      ansible_host: 192.168.130.13
+    server4555.byma.com.ar:
+      ansible_host: 192.168.130.14
+    server4769.byma.com.ar:
+      ansible_host: 192.168.130.15
+    server2055.byma.com.ar:
+      ansible_host: 192.168.130.16
+    server6062.byma.com.ar:
+      ansible_host: 192.168.130.17
+    server4264.byma.com.ar:
+      ansible_host: 192.168.130.18
+    server9156.byma.com.ar:
+      ansible_host: 192.168.130.19
+
+    # Segmento 192.168.12.0/24 (10 hosts)
+    server3164.byma.com.ar:
+      ansible_host: 192.168.12.10
+    server3686.byma.com.ar:
+      ansible_host: 192.168.12.11
+    server6499.byma.com.ar:
+      ansible_host: 192.168.12.12
+    server7401.byma.com.ar:
+      ansible_host: 192.168.12.13
+    server5934.byma.com.ar:
+      ansible_host: 192.168.12.14
+    server5280.byma.com.ar:
+      ansible_host: 192.168.12.15
+    server8404.byma.com.ar:
+      ansible_host: 192.168.12.16
+    server7351.byma.com.ar:
+      ansible_host: 192.168.12.17
+    server7609.byma.com.ar:
+      ansible_host: 192.168.12.18
+    server1993.byma.com.ar:
+      ansible_host: 192.168.12.19
+
+    # Segmento 192.168.101.0/24 (10 hosts)
+    server4828.byma.com.ar:
+      ansible_host: 192.168.101.10
+    server3954.byma.com.ar:
+      ansible_host: 192.168.101.11
+    server1721.byma.com.ar:
+      ansible_host: 192.168.101.12
+    server2755.byma.com.ar:
+      ansible_host: 192.168.101.13
+    server2161.byma.com.ar:
+      ansible_host: 192.168.101.14
+    server4723.byma.com.ar:
+      ansible_host: 192.168.101.15
+    server7179.byma.com.ar:
+      ansible_host: 192.168.101.16
+    server6555.byma.com.ar:
+      ansible_host: 192.168.101.17
+    server8688.byma.com.ar:
+      ansible_host: 192.168.101.18
+    server8423.byma.com.ar:
+      ansible_host: 192.168.101.19
+
+    # Segmento 192.168.103.0/24 (10 hosts)
+    server7830.byma.com.ar:
+      ansible_host: 192.168.103.10
+    server8054.byma.com.ar:
+      ansible_host: 192.168.103.11
+    server5649.byma.com.ar:
+      ansible_host: 192.168.103.12
+    server4739.byma.com.ar:
+      ansible_host: 192.168.103.13
+    server6307.byma.com.ar:
+      ansible_host: 192.168.103.14
+    server8792.byma.com.ar:
+      ansible_host: 192.168.103.15
+    server1133.byma.com.ar:
+      ansible_host: 192.168.103.16
+    server4331.byma.com.ar:
+      ansible_host: 192.168.103.17
+    server6928.byma.com.ar:
+      ansible_host: 192.168.103.18
+    server8513.byma.com.ar:
+      ansible_host: 192.168.103.19
+
+    # Segmento 192.168.144.0/22 (10 hosts)
+    server1575.byma.com.ar:
+      ansible_host: 192.168.144.10
+    server9037.byma.com.ar:
+      ansible_host: 192.168.144.11
+    server4359.byma.com.ar:
+      ansible_host: 192.168.144.12
+    server3972.byma.com.ar:
+      ansible_host: 192.168.144.13
+    server9120.byma.com.ar:
+      ansible_host: 192.168.144.14
+    server2631.byma.com.ar:
+      ansible_host: 192.168.144.15
+    server1489.byma.com.ar:
+      ansible_host: 192.168.144.16
+    server9882.byma.com.ar:
+      ansible_host: 192.168.144.17
+    server3952.byma.com.ar:
+      ansible_host: 192.168.144.18
+    server5662.byma.com.ar:
+      ansible_host: 192.168.144.19
